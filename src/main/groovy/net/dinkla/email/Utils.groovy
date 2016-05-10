@@ -32,7 +32,7 @@ class Utils {
             }
         } else if (obj instanceof BASE64DecoderStream) {
             BASE64DecoderStream ds = obj
-            acc.add("BASE64DecoderStream") //ds.getText())
+            //acc.add("BASE64DecoderStream") //ds.getText())
         } else if (obj instanceof IMAPInputStream) {
             IMAPInputStream is = obj
             acc.add(is.getText())

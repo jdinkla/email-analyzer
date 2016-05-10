@@ -29,7 +29,7 @@ class ImapReader {
         session = Session.getInstance(props, null);
         session.setDebug(debug);
 
-        // Get a Store object that implements the protocol.
+        // Get a store object that implements the protocol.
         store = session.getStore(ep.protocol);
         store.connect(ep.host, ep.user, ep.password);
     }
@@ -50,8 +50,7 @@ class ImapReader {
         List<MyMessage> msgs = new LinkedList<>()
         Folder folder = store.getFolder(folderName)
         folder.open(Folder.READ_ONLY)
-        printFolder(folder, msgs)
-//        folder.close(false)
+        getMessages(folder, msgs)
 
         MyFolder mf = new MyFolder()
         mf.folder = folder
@@ -60,44 +59,27 @@ class ImapReader {
     }
 
 
-    void printFolder(Folder folder, List<MyMessage> msgs) {
-//        println(tab + "Name:      '${folder.getName()}'")
-//        println(tab + "Full Name: '${folder.getFullName()}'")
-//        println(tab + "URL:       '${folder.getURLName()}'")
+    void getMessages(Folder folder, List<MyMessage> msgs) {
 
         boolean isDirectory = (folder.getType() & Folder.HOLDS_FOLDERS) != 0
 
         if (isDirectory) {
-//            println(tab + "Total Messages:  " + folder.getMessageCount());
-//            println(tab + "New Messages:    " + folder.getNewMessageCount());
-//            println(tab + "Unread Messages: " + folder.getUnreadMessageCount());
-
             final int c = folder.getMessageCount();
             for (int i=0; i<c; i++) {
                 Message msg = folder.getMessage(i+1)
-                List<String> txts = Utils.getTexts(msg)
-
-//                for (String txt : txts) {
-//                    println("---  '${txt.substring(0, Math.min(txt.size(), 100))}'")
-//                }
-
-                MyMessage mmsg = new MyMessage()
-                mmsg.msg = msg
-                mmsg.texts = txts
-
+                MyMessage mmsg = new MyMessage(msg)
                 msgs.add(mmsg)
             }
         }
-
     }
 
     public static void main(String[] args) {
-        EmailProps ep = EmailProps.readFromFile('secret.properties')
+        final EmailProps ep = EmailProps.readFromFile('secret.properties')
+        final String folderName = "Akquise"
 
         def ir = new ImapReader(ep)
         ir.connect()
-
-        MyFolder folder = ir.read("Akquise")
+        MyFolder folder = ir.read(folderName)
 
         for (MyMessage msg : folder.msgs) {
             println("---------------------------------------------------------------------------------")
@@ -106,6 +88,6 @@ class ImapReader {
                 println("---  '${txt.substring(0, Math.min(txt.size(), 100))}'")
            }
         }
-
     }
+
 }
