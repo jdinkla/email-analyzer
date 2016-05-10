@@ -11,12 +11,15 @@
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="module" module-name="emailanalyzer_main" />
+    <orderEntry type="library" name="Gradle: com.fasterxml.jackson.core:jackson-core:2.6.4" level="project" />
+    <orderEntry type="library" name="Gradle: com.fasterxml.jackson.core:jackson-databind:2.6.4" level="project" />
     <orderEntry type="library" name="Gradle: org.springframework.boot:spring-boot-starter-data-elasticsearch:1.3.5.RELEASE" level="project" />
     <orderEntry type="library" name="Gradle: org.springframework.boot:spring-boot-starter-data-jpa:1.3.5.RELEASE" level="project" />
     <orderEntry type="library" name="Gradle: org.springframework.boot:spring-boot-starter-mail:1.3.5.RELEASE" level="project" />
     <orderEntry type="library" name="Gradle: org.codehaus.groovy:groovy:2.4.6" level="project" />
     <orderEntry type="library" name="Gradle: org.springframework.boot:spring-boot-starter-test:1.3.5.RELEASE" level="project" />
     <orderEntry type="library" name="Gradle: org.spockframework:spock-core:1.0-groovy-2.4" level="project" />
+    <orderEntry type="library" name="Gradle: com.fasterxml.jackson.core:jackson-annotations:2.6.6" level="project" />
     <orderEntry type="library" name="Gradle: org.springframework.boot:spring-boot-starter:1.3.5.RELEASE" level="project" />
     <orderEntry type="library" name="Gradle: org.springframework.data:spring-data-elasticsearch:1.3.4.RELEASE" level="project" />
     <orderEntry type="library" name="Gradle: org.springframework.boot:spring-boot-starter-aop:1.3.5.RELEASE" level="project" />
@@ -44,8 +47,6 @@
     <orderEntry type="library" name="Gradle: commons-collections:commons-collections:3.2.2" level="project" />
     <orderEntry type="library" name="Gradle: joda-time:joda-time:2.8.2" level="project" />
     <orderEntry type="library" name="Gradle: org.elasticsearch:elasticsearch:1.5.2" level="project" />
-    <orderEntry type="library" name="Gradle: com.fasterxml.jackson.core:jackson-core:2.6.6" level="project" />
-    <orderEntry type="library" name="Gradle: com.fasterxml.jackson.core:jackson-databind:2.6.6" level="project" />
     <orderEntry type="library" name="Gradle: org.slf4j:slf4j-api:1.7.21" level="project" />
     <orderEntry type="library" name="Gradle: org.slf4j:jcl-over-slf4j:1.7.21" level="project" />
     <orderEntry type="library" name="Gradle: org.springframework:spring-aop:4.2.6.RELEASE" level="project" />
@@ -82,7 +83,6 @@
     <orderEntry type="library" name="Gradle: org.antlr:antlr-runtime:3.5" level="project" />
     <orderEntry type="library" name="Gradle: org.ow2.asm:asm:4.1" level="project" />
     <orderEntry type="library" name="Gradle: org.ow2.asm:asm-commons:4.1" level="project" />
-    <orderEntry type="library" name="Gradle: com.fasterxml.jackson.core:jackson-annotations:2.6.6" level="project" />
     <orderEntry type="library" name="Gradle: aopalliance:aopalliance:1.0" level="project" />
     <orderEntry type="library" name="Gradle: org.apache.tomcat:tomcat-juli:8.0.33" level="project" />
     <orderEntry type="library" name="Gradle: antlr:antlr:2.7.7" level="project" />

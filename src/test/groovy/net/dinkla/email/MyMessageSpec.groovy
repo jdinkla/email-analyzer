@@ -43,6 +43,10 @@ class MyMessageSpec extends Specification {
         and: msg1.recipients[1] == 'cc@cc.cc'
     }
 
+    def "toJSON"() {
+        expect: msg1.toJSON()[0] == '{'
+    }
+
     Message createMimeMessage() {
         def props = System.getProperties();
         def session = Session.getInstance(props, null);

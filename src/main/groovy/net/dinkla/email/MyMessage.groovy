@@ -1,5 +1,7 @@
 package net.dinkla.email
 
+import com.fasterxml.jackson.databind.ObjectMapper
+
 import javax.mail.Message
 
 /**
@@ -7,7 +9,7 @@ import javax.mail.Message
  */
 class MyMessage {
 
-    Message msg
+    static ObjectMapper mapper = new ObjectMapper()
 
     List<String> froms
     String subject
@@ -17,13 +19,16 @@ class MyMessage {
     List<String> recipients
 
     MyMessage(Message msg) {
-        this.msg = msg
         texts = Utils.getTexts(msg)
         subject = msg.subject
         froms = msg.from.collect { it.toString() }
         sentDate = msg.sentDate
         receivedDate = msg.receivedDate
         recipients = msg.allRecipients.collect { it.toString() }
+    }
+
+    String toJSON() {
+        mapper.writeValueAsString(this)
     }
 
 }

@@ -83,11 +83,12 @@ class ImapReader {
 
         for (MyMessage msg : folder.msgs) {
             println("---------------------------------------------------------------------------------")
-            println("${msg.msg.sentDate} '${msg.msg.subject}'")
+            println("${msg.sentDate} '${msg.subject}'")
             for (String txt : msg.texts) {
                 println("---  '${txt.substring(0, Math.min(txt.size(), 100))}'")
            }
         }
+        folder.close()
     }
 
 }

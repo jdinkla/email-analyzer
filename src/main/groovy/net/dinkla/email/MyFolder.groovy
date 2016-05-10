@@ -12,6 +12,10 @@ class MyFolder {
 
     @Override
     protected void finalize() throws Throwable {
+        close()
+    }
+
+    void close() {
         if (folder.isOpen()) folder.close(false)
     }
 
