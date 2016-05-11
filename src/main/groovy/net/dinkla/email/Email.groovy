@@ -1,15 +1,17 @@
 package net.dinkla.email
 
-import net.dinkla.TextDate
+import com.fasterxml.jackson.annotation.JsonFormat
+import net.dinkla.Constants
 import org.springframework.data.annotation.Id
 import org.springframework.data.elasticsearch.annotations.DateFormat
 import org.springframework.data.elasticsearch.annotations.Document
 import org.springframework.data.elasticsearch.annotations.Field
+import org.springframework.data.elasticsearch.annotations.FieldType
 
 /**
  * Created by Dinkla on 10.05.2016.
  */
-@Document(indexName = "email3", type = "email")
+@Document(indexName = Constants.EMAIL_INDEX, type = Constants.EMAIL_TYPE)
 class Email {
 
     @Id
@@ -19,21 +21,15 @@ class Email {
     List<String> froms
     String subject
 
-    @Field(format=DateFormat.basic_date_time_no_millis)
-    TextDate sentDate
+    @Field(type=FieldType.Date, format=DateFormat.custom, pattern = Constants.DATE_FORMAT)
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = Constants.DATE_FORMAT)
+    Date sentDate
 
-    @Field(format=DateFormat.basic_date_time_no_millis)
-    TextDate receivedDate
+    @Field(type=FieldType.Date, format=DateFormat.custom, pattern = Constants.DATE_FORMAT)
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = Constants.DATE_FORMAT)
+    Date receivedDate
 
     List<String> texts
-
-    void setSentDate(Date date) {
-        sentDate = new TextDate(date)
-    }
-
-    void setReceivedDate(Date date) {
-        receivedDate = new TextDate(date)
-    }
 
     @Override
     public String toString() {
