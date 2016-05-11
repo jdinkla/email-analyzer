@@ -25,7 +25,7 @@ docker run -d -v $HOME/docker/elastic-dev:/usr/share/elasticsearch/data -p 9200:
 Add [kibana](https://www.elastic.co/products/kibana) with
 
 ```
-docker run --name kibana-dev --link es-dev:elasticsearch -p 5601:5601 kibana
+docker run --name kibana-dev --link es-dev:elasticsearch -p 5601:5601 kibana:4.1
 ```
 
 ### Access via web browser

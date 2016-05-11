@@ -1,5 +1,6 @@
 package net.dinkla.email
 
+import org.elasticsearch.client.Client
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.CommandLineRunner
 import org.springframework.boot.SpringApplication
@@ -13,10 +14,7 @@ class EmailAnalyzerApplication implements CommandLineRunner {
     @Autowired
     EmailService service
 
-	@Override
-	void run(String... args) throws Exception {
-		println "Hello"
-
+    void test() {
         // add an email
         Email em = new Email()
         em.froms = [ "from@from.fro"]
@@ -30,7 +28,36 @@ class EmailAnalyzerApplication implements CommandLineRunner {
         // get it
         List<Email> ems = service.findBySubjectLike("Spring")
         println ems
-	}
+    }
+
+    void readEmailsAndSave() {
+        final EmailProps ep = EmailProps.readFromFile('secret.properties')
+        final String folderName = "Akquise"
+
+        def ir = new ImapReader(ep)
+        ir.connect()
+        EmailFolder folder = ir.read(folderName)
+
+        Long id = 0
+        for (Email em : folder.msgs) {
+            em.id = id++
+            service.add(em)
+        }
+        folder.close()
+    }
+
+	@Override
+	void run(String... args) throws Exception {
+        readEmailsAndSave()
+
+        /*
+        // get some
+        List<Email> ems = service.findBySubjectLike("gesucht")
+        println ems
+        */
+
+
+    }
 
 	static void main(String[] args) {
 		SpringApplication.run EmailAnalyzerApplication, args

@@ -67,7 +67,7 @@ class ImapReader {
             final int c = folder.getMessageCount();
             for (int i=0; i<c; i++) {
                 Message msg = folder.getMessage(i+1)
-                Email mmsg = new Email(msg)
+                Email mmsg = EmailUtils.fromMessage(msg)
                 msgs.add(mmsg)
             }
         }

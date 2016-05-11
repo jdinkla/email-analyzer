@@ -34,7 +34,7 @@ class EmailUtilsSpec extends Specification {
     }
 
     def "sentDate"() {
-        expect: em.sentDate == sdf.parse('2016-01-01')
+        expect: em.sentDate.toString().substring(0, 10) == '2016-01-01'
     }
 
     def "recipients"() {

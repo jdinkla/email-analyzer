@@ -1,5 +1,6 @@
 package net.dinkla.email
 
+import net.dinkla.TextDate
 import spock.lang.Specification
 
 import javax.mail.Message
@@ -29,7 +30,7 @@ class EmailSpec extends Specification {
     }
 
     def "sentDate"() {
-        expect: em.sentDate == sdf.parse('2016-01-01')
+        expect: em.sentDate == new TextDate(sdf.parse('2016-01-01'))
     }
 
     def "recipients"() {
