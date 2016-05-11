@@ -19,10 +19,10 @@ class EmailUtils {
         Email em = new Email()
         em.texts = getTexts(msg)
         em.subject = msg.subject
-        em.froms = msg.from.collect { it.toString() }
+        msg.from.each { em.addFroms(new EmailAddress(it.toString())) }
         em.sentDate = msg.sentDate
         em.receivedDate = msg.receivedDate
-        em.recipients = msg.allRecipients.collect { it.toString() }
+        msg.allRecipients.each { em.addRecipient(new EmailAddress(it.toString())) }
         return em
     }
 

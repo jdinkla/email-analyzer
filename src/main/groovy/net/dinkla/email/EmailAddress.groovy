@@ -10,6 +10,7 @@ class EmailAddress implements Serializable {
     String email
 
     EmailAddress(String orig) {
+        this.orig = orig
         def ps = orig.split("<")
         if (ps.size() == 1) {
             name = ""

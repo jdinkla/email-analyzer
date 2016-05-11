@@ -29,18 +29,18 @@ class EmailUtilsSpec extends Specification {
 
     def "from"() {
         expect: em.froms.size == 2
-        and: em.froms[0] == 'dubdi@dibdi.dub'
-        and: em.froms[1] == 'dibdi@dubdi.dub'
+        and: em.froms[0].email == 'dubdi@dibdi.dub'
+        and: em.froms[1].email == 'dibdi@dubdi.dub'
     }
 
     def "sentDate"() {
-        expect: em.sentDate.toString().substring(0, 10) == '2016-01-01'
+        expect: em.sentDate == sdf.parse('2016-01-01')
     }
 
     def "recipients"() {
         expect: em.recipients.size == 2
-        and: em.recipients[0] == 'to@to.to'
-        and: em.recipients[1] == 'cc@cc.cc'
+        and: em.recipients[0].email == 'to@to.to'
+        and: em.recipients[1].email == 'cc@cc.cc'
     }
 
     def "toJSON"() {
