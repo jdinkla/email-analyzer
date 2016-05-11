@@ -1,5 +1,6 @@
 package net.dinkla
 
+import net.dinkla.email.EmailAnalyzerApplication
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.springframework.boot.test.SpringApplicationConfiguration

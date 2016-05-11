@@ -5,10 +5,10 @@ import javax.mail.Folder
 /**
  * Created by Dinkla on 10.05.2016.
  */
-class MyFolder {
+class EmailFolder {
 
     Folder folder
-    List<MyMessage> msgs
+    List<Email> msgs
 
     @Override
     protected void finalize() throws Throwable {

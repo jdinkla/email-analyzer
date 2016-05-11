@@ -46,20 +46,20 @@ class ImapReader {
         super.finalize()
     }
 
-    MyFolder read(String folderName) {
-        List<MyMessage> msgs = new LinkedList<>()
+    EmailFolder read(String folderName) {
+        List<Email> msgs = new LinkedList<>()
         Folder folder = store.getFolder(folderName)
         folder.open(Folder.READ_ONLY)
         getMessages(folder, msgs)
 
-        MyFolder mf = new MyFolder()
+        EmailFolder mf = new EmailFolder()
         mf.folder = folder
         mf.msgs = msgs
         return mf
     }
 
 
-    void getMessages(Folder folder, List<MyMessage> msgs) {
+    void getMessages(Folder folder, List<Email> msgs) {
 
         boolean isDirectory = (folder.getType() & Folder.HOLDS_FOLDERS) != 0
 
@@ -67,7 +67,7 @@ class ImapReader {
             final int c = folder.getMessageCount();
             for (int i=0; i<c; i++) {
                 Message msg = folder.getMessage(i+1)
-                MyMessage mmsg = new MyMessage(msg)
+                Email mmsg = new Email(msg)
                 msgs.add(mmsg)
             }
         }
@@ -79,9 +79,9 @@ class ImapReader {
 
         def ir = new ImapReader(ep)
         ir.connect()
-        MyFolder folder = ir.read(folderName)
+        EmailFolder folder = ir.read(folderName)
 
-        for (MyMessage msg : folder.msgs) {
+        for (Email msg : folder.msgs) {
             println("---------------------------------------------------------------------------------")
             println("${msg.sentDate} '${msg.subject}'")
             for (String txt : msg.texts) {

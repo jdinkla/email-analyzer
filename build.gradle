@@ -27,10 +27,11 @@ repositories {
 
 
 dependencies {
+	//compile 'org.elasticsearch:elasticsearch:2.3.2'						// needed, otherwise spring boot uses 1.5
     compile 'com.fasterxml.jackson.core:jackson-core:2.6.4'
     compile 'com.fasterxml.jackson.core:jackson-databind:2.6.4'
 	compile 'org.springframework.boot:spring-boot-starter-data-elasticsearch'
-	compile 'org.springframework.boot:spring-boot-starter-data-jpa'
+	//compile 'org.springframework.boot:spring-boot-starter-data-jpa'
 	compile 'org.springframework.boot:spring-boot-starter-mail'
 	compile 'org.codehaus.groovy:groovy'
 	testCompile('org.springframework.boot:spring-boot-starter-test')
@@ -42,4 +43,8 @@ eclipse {
 		 containers.remove('org.eclipse.jdt.launching.JRE_CONTAINER')
 		 containers 'org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8'
 	}
+}
+
+springBoot {
+	mainClass = "net.dinkla.email.EmailAnalyzerApplication"
 }
