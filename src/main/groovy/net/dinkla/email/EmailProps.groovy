@@ -5,10 +5,13 @@ package net.dinkla.email
  */
 class EmailProps {
 
-    final String protocol
-    final String host
-    final String user
-    final String password
+    String protocol
+    String host
+    String user
+    String password
+
+    EmailProps() {
+    }
 
     EmailProps(String protocol, String host, String user, String password) {
         this.protocol = protocol

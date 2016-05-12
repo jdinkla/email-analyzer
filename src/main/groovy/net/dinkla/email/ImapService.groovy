@@ -12,13 +12,13 @@ class ImapService {
     @Autowired
     EmailService service
 
-    void importEmails(EmailProps ep, String folderName) {
+    void importEmails(final EmailProps ep, final String folderName, final Long startId) {
 
         def ir = new ImapReader(ep)
         ir.connect()
         EmailFolder folder = ir.read(folderName)
 
-        Long id = 0
+        Long id = startId
         for (Email em : folder.msgs) {
             em.id = id++
             service.add(em)

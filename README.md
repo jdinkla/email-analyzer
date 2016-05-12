@@ -51,10 +51,12 @@ docker start kibana-dev
 
 # Useful links
 
+If you want to learn more about the tools used:
+
 * [Spring Boot documentation](x)
 * [Spring Data Elasticsearch documentation](http://docs.spring.io/spring-data/elasticsearch/docs/current/reference/html/)
-*
-
+* [Elasticsearch Java API](https://www.elastic.co/guide/en/elasticsearch/client/java-api/current/index.html)
+* []()
 
 ---
 (c) 2016 Jörn Dinkla, [www.dinkla.com](http://www.dinkla.com)

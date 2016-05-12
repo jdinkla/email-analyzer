@@ -1,5 +1,6 @@
 package net.dinkla.email
 
+import net.dinkla.Histogram
 import org.springframework.data.elasticsearch.repository.ElasticsearchRepository
 import org.springframework.stereotype.Repository
 
@@ -9,7 +10,8 @@ import org.springframework.stereotype.Repository
 interface EmailRepositoryCustom {
 
     // TODO add queries here for the web app
-    public List<Email> mySpecialFind(String subject);
+    public Long findMaximalId()
 
+    public Histogram<String, Integer> getWeeklyHistogram(String topic)
 
 }

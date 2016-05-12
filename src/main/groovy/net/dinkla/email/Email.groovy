@@ -14,6 +14,7 @@ import org.springframework.data.elasticsearch.annotations.FieldType
 @Document(indexName = Constants.EMAIL_INDEX, type = Constants.EMAIL_TYPE)
 class Email {
 
+    // Spring Data seems to need an @Id, so we use a surrogate one
     @Id
     Long id
 

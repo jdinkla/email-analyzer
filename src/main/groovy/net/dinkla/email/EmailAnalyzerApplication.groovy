@@ -33,16 +33,27 @@ class EmailAnalyzerApplication implements CommandLineRunner {
         println ems
     }
 
-    void testCustomRepository() {
-        List<Email> ems = service.repository.mySpecialFind("Spring")
-        println "mySpecialFind returned: $ems"
+    void testCustomRepositoryFindId() {
+        Long id = service.repository.findMaximalId()
+        println "findMaximalId returned: $id"
     }
+
+    void testCustomRepositoryAggregation() {
+        def xs = service.repository.getWeeklyHistogram("Scala")
+        println "getWeeklyHistogram returned: $xs"
+    }
+
 
     void importEmails() {
         final EmailProps ep = EmailProps.readFromFile('secret.properties')
         final String folderName = "Akquise"
+        importEmails(ep, folderName)
+    }
 
-        imaps.importEmails(ep, folderName)
+    void importEmails(final EmailProps ep, final String folderName) {
+        final Long maxId = service.repository.findMaximalId()
+        final Long startId = maxId + 1
+        imaps.importEmails(ep, folderName, startId)
     }
 
     void deleteAll() {
@@ -54,7 +65,7 @@ class EmailAnalyzerApplication implements CommandLineRunner {
         //deleteAll()
         //importEmails()
 
-        testCustomRepository()
+        testCustomRepositoryAggregation()
 
     }
 
