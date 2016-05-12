@@ -1,8 +1,6 @@
 package net.dinkla.email
 
-import net.dinkla.Histogram
-import org.springframework.data.elasticsearch.repository.ElasticsearchRepository
-import org.springframework.stereotype.Repository
+import net.dinkla.utils.Histogram
 
 /**
  * Created by Dinkla on 11.05.2016.

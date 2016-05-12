@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <title>Error</title>
+
+    <link rel="stylesheet" href="css/style.css" media="all" type="text/css" />
+</head>
+<body>
+    Something went wrong: ${status} ${error}
+</body>
+</html>

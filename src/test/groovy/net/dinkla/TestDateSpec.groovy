@@ -1,5 +1,6 @@
 package net.dinkla
 
+import net.dinkla.utils.TextDate
 import spock.lang.Specification
 
 import java.text.SimpleDateFormat

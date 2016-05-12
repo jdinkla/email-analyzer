@@ -1,7 +1,7 @@
 package net.dinkla.email
 
 import net.dinkla.Constants
-import net.dinkla.Histogram
+import net.dinkla.utils.Histogram
 import org.elasticsearch.action.search.SearchResponse
 import org.elasticsearch.action.search.SearchType
 import org.elasticsearch.search.aggregations.AggregationBuilders

@@ -1,4 +1,9 @@
-package net.dinkla.email
+package net.dinkla.imap
+
+import net.dinkla.email.Email
+import net.dinkla.email.EmailFolder
+import net.dinkla.email.EmailProps
+import net.dinkla.email.EmailUtils
 
 import javax.mail.Folder
 import javax.mail.Message

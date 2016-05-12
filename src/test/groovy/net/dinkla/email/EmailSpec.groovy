@@ -1,9 +1,7 @@
 package net.dinkla.email
 
-import net.dinkla.TextDate
 import spock.lang.Specification
 
-import javax.mail.Message
 import java.text.SimpleDateFormat
 
 /**

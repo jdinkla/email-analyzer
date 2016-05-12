@@ -1,5 +1,9 @@
-package net.dinkla.email
+package net.dinkla
 
+import net.dinkla.email.Email
+import net.dinkla.email.EmailProps
+import net.dinkla.email.EmailService
+import net.dinkla.imap.ImapService
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.CommandLineRunner
 import org.springframework.boot.SpringApplication
@@ -7,8 +11,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication
 
 import java.time.Instant
 
-@SpringBootApplication
-class EmailAnalyzerApplication implements CommandLineRunner {
+//@SpringBootApplication
+/*
+class EmailAnalyzerCommandLineApplication implements CommandLineRunner {
 
     @Autowired
     EmailService service
@@ -70,7 +75,8 @@ class EmailAnalyzerApplication implements CommandLineRunner {
     }
 
 	static void main(String[] args) {
-		SpringApplication.run EmailAnalyzerApplication, args
+		SpringApplication.run EmailAnalyzerCommandLineApplication, args
 	}
 
 }
+*/

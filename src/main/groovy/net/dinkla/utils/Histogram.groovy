@@ -1,4 +1,4 @@
-package net.dinkla
+package net.dinkla.utils
 
 /**
  * Created by Dinkla on 12.05.2016.

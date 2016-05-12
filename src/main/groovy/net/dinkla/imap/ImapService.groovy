@@ -1,5 +1,9 @@
-package net.dinkla.email
+package net.dinkla.imap
 
+import net.dinkla.email.Email
+import net.dinkla.email.EmailFolder
+import net.dinkla.email.EmailProps
+import net.dinkla.email.EmailService
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 

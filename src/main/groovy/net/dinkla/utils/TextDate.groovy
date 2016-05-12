@@ -1,4 +1,4 @@
-package net.dinkla
+package net.dinkla.utils
 
 import java.text.DateFormat
 import java.text.SimpleDateFormat

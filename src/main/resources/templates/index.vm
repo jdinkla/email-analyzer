@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Analyze emails with Elasticsearch</title>
+
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css" media="all" type="text/css" />
+
+</head>
+
+<body>
+
+<!-- ------------------------------------- -->
+<h1>Analyze emails with Elasticsearch</h1>
+
+<div class="box">
+
+    <p>Say something about Elasticsearch.</p>
+
+</div>
+
+<!-- ------------------------------------- -->
+<h2>Data in Elasticsearch</h2>
+
+#if ( $numberOfEmails == 0)
+<div class="alert alert-warning">
+    <p>
+        There are no emails in the database. You have to import them.
+    </p>
+</div>
+#else
+<div class="alert alert-info">
+    <p>
+        There are ${numberOfEmails} emails loaded.
+    </p>
+</div>
+#end
+
+<!-- ------------------------------------- -->
+<h3>Import emails</h3>
+
+<div class="box">
+
+    <p>
+        Connection datat for email storage: POP3 / IMAP / JavaMail
+    </p>
+    <form action="/import" method="post">
+        protocol: <input type="text" name="protocol"><br/>
+        host: <input type="text" name="host"><br/>
+        user: <input type="text" name="user"><br/>
+        password: <input type="text" name="password"><br/>
+
+        <button class="btn btn-primary" type="submit">Import emails</button>
+    </form>
+
+</div>
+
+#if ( $numberOfEmails > 0)
+<form action="/delete" method="post">
+    <button class="btn btn-danger" type="submit">Delete emails</button>
+</form>
+#end
+
+<!-- ------------------------------------- -->
+<h2>Analyse emails</h2>
+
+<div class="box">
+
+    <p>Analyze here</p>
+
+</div>
+
+
+<!-- ------------------------------------- -->
+<h2>Rest</h2>
+
+<div class="box">
+
+    <p class="box-p">
+        Index says ${name}
+    </p>
+
+    <ul>
+        <li>Import emails from Imap provider</li>
+        <li>Analyse email data in Elasticsearch</li>
+    </ul>
+
+    <p class="box-p">
+        Import:
+            Email:    IMAP host, user, password, folder
+            ES: host, url, index, type
+    </p>
+
+    <p class="box-p">
+        Bisher: in application.propeties: spring.data.elasticsearch.cluster-nodes=ubuntu-desktop:9300
+    </p>
+
+    <p class="box-p">
+        Bisher: in Klasse index und type
+    </p>
+
+    <p class="box-p">
+        Bisher protocol, host, user, password
+    </p>
+
+</div>
+
+
+
+<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script src="js/bootstrap.min.js"></script>
+
+</body>
+</html>
