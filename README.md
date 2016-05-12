@@ -49,4 +49,17 @@ docker start kibana-dev
 
 ----
 
+# Useful links
+
+* [Spring Boot documentation](x)
+* [Spring Data Elasticsearch documentation](http://docs.spring.io/spring-data/elasticsearch/docs/current/reference/html/)
+*
+
+
+---
+(c) 2016 Jörn Dinkla, [www.dinkla.com](http://www.dinkla.com)
+
+
+
+
 

@@ -33,6 +33,11 @@ class EmailAnalyzerApplication implements CommandLineRunner {
         println ems
     }
 
+    void testCustomRepository() {
+        List<Email> ems = service.repository.mySpecialFind("Spring")
+        println "mySpecialFind returned: $ems"
+    }
+
     void importEmails() {
         final EmailProps ep = EmailProps.readFromFile('secret.properties')
         final String folderName = "Akquise"
@@ -46,8 +51,11 @@ class EmailAnalyzerApplication implements CommandLineRunner {
 
 	@Override
 	void run(String... args) throws Exception {
-        deleteAll()
-        importEmails()
+        //deleteAll()
+        //importEmails()
+
+        testCustomRepository()
+
     }
 
 	static void main(String[] args) {

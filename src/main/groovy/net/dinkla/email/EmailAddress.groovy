@@ -9,6 +9,10 @@ class EmailAddress implements Serializable {
     String name
     String email
 
+    // needed by jackson
+    EmailAddress() {
+    }
+
     EmailAddress(String orig) {
         this.orig = orig
         def ps = orig.split("<")
