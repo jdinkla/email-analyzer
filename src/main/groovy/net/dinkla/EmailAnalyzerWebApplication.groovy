@@ -50,7 +50,6 @@ class EmailAnalyzerWebApplication extends SpringBootServletInitializer  {
 
     void importEmails() {
         final EmailServerProperties ep = EmailServerProperties.readFromFile('secret.properties')
-        ep.folder = "Akquise"
         Long numLoaded = imaps.importEmails(ep)
     }
 

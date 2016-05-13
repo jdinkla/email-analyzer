@@ -36,6 +36,12 @@ class EmailController {
     @Value('${spring.data.elasticsearch.cluster-nodes}')
     String esNodes
 
+    @Value('${emailanalyzer.index}')
+    String esIndex
+
+    @Value('${emailanalyzer.type}')
+    String esType
+
     @RequestMapping(value = "/", method = RequestMethod.GET)
     def index(Model model) {
         logger.info("GET index")
@@ -44,6 +50,8 @@ class EmailController {
         model.numberOfEmails = service.repository.count()
         model.analyze = new Analyze()
         model.esNodes = esNodes
+        model.esIndex = esIndex
+        model.esType = esType
 
         "index"
     }
@@ -52,33 +60,56 @@ class EmailController {
     def importEdit(Model model) {
         logger.info("GET import")
 
+        model.exception = false
         model.esNodes = esNodes
+        model.esIndex = esIndex
+        model.esType = esType
         model.emailServerProperties = new EmailServerProperties()
 
         "import"
     }
 
     @RequestMapping(value = "/import", method = RequestMethod.POST)
-    def importRun(Model model, @Valid EmailServerProperties props, BindingResult result) {
+    def importRun(Model model, @Valid EmailServerProperties props, BindingResult bindingResult) {
         logger.info("POST import")
-        logger.info("importRun: props=$props, result=$result")
+        logger.info("importRun: props=$props, bindingResult=$bindingResult")
 
-        if (result.hasErrors()) {
-            logger.warn("BindingResult has errors")
+        if (bindingResult.hasErrors()) {
+            model.exception = false
+            model.esNodes = esNodes
+            model.esIndex = esIndex
+            model.esType = esType
+            model.emailServerProperties = props
             return "import"
         }
 
         // run the import
-
+        Long numLoaded = 0
+        try {
+            numLoaded = emailServerService.importEmails(props)
+        } catch (Exception e) {
+            logger.error("Exception e=$e")
+            model.exception = true
+            model.exceptionText = e.toString()
+            model.esNodes = esNodes
+            model.esIndex = esIndex
+            model.esType = esType
+            model.emailServerProperties = props
+            return "import"
+        }
 
         // if successful
         // redirect to the start page
+        /*
         model.numLoaded = 1234
         model.numberOfEmails = service.repository.count()
         model.analyze = new Analyze()
         model.esNodes = esNodes
+        model.esIndex = esIndex
+        model.esType = esType
+        */
 
-        "index"
+        return "redirect:/index?numLoaded=${numLoaded}"
     }
 
 
@@ -106,12 +137,7 @@ class EmailController {
             logger.warn("BindingResult has errors")
             // handle errors
         }
-        try {
-            model.numLoaded = emailServerService.importEmails(props)
-        } catch (Exception e) {
-            logger.error("Exception e=$e")
-            model.error = e.toString()
-        }
+
         model.emailServer = props
         model.numberOfEmails = service.repository.count()
 

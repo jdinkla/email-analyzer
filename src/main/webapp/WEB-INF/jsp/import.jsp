@@ -30,40 +30,37 @@
 <!-- ------------------------------------- -->
 <h1>Import emails into Elasticsearch</h1>
 
-<div class="box">
-
-    <p>
-        Connection to Elasticsearch
-    </p>
-
-    <table>
-        <tr>
-            <td>nodes</td>
-            <td>${esNodes}</td>
-            <td>spring.data.elasticsearch.cluster-nodes</td>
-        </tr>
-        <tr>
-            <td>index</td>
-            <td></td>
-            <td></td>
-        </tr>
-        <tr>
-            <td>type</td>
-            <td></td>
-            <td></td>
-        </tr>
-    </table>
-
-</div>
-
-<!-- ------------------------------------- -->
 <form:form action="import" method="post" modelAttribute="emailServerProperties">
+
+    <h3>Connection to Elasticsearch</h3>
 
     <div class="box">
 
         <p>
-            Connection to the IMAP/POP3 email provider
+           The configuration is defined in the file <code>application.properties</code>.
         </p>
+
+        <table>
+            <tr>
+                <td>nodes</td>
+                <td>${esNodes}</td>
+            </tr>
+            <tr>
+                <td>index</td>
+                <td>${esIndex}</td>
+            </tr>
+            <tr>
+                <td>type</td>
+                <td>${esType}</td>
+            </tr>
+        </table>
+
+    </div>
+
+
+    <h3>Connection to the IMAP/POP3 email provider</h3>
+
+    <div class="box">
 
         <p>
             <strong>Warning:</strong> the password is transported unencrypted to the web server.
@@ -74,27 +71,27 @@
             <tr>
                 <td>protocol</td>
                 <td><form:input type="text" path="protocol" /></td>
-                <td><span name="protocol.errors">Field is required.</span></td>
+                <td class="validation-error"><form:errors path="protocol" cssClass="validation-error" /></td>
             </tr>
             <tr>
                 <td>host</td>
                 <td><form:input type="text" path="host" /></td>
-                <td><span name="host.errors">Field is required.</span></td>
+                <td class="validation-error"><form:errors path="host" cssClass="validation-error" /></td>
             </tr>
             <tr>
                 <td>user</td>
                 <td><form:input type="text" path="user" /></td>
-                <td><span name="user.errors">Field is required.</span></td>
+                <td class="validation-error"><form:errors path="user" cssClass="validation-error" /></td>
             </tr>
             <tr>
                 <td>password</td>
-                <td><form:input type="text" path="password" /></td>
-                <td><span name="password.errors">Field is required.</span></td>
+                <td><form:input type="password" path="password" /></td>
+                <td class="validation-error"><form:errors path="password" cssClass="validation-error" /></td>
             </tr>
             <tr>
                 <td>folder</td>
                 <td><form:input type="text" path="folder" /></td>
-                <td><span name="folder.errors">Field is required.</span></td>
+                <td class="validation-error"><form:errors path="folder" cssClass="validation-error" /></td>
             </tr>
         </table>
 
@@ -103,6 +100,18 @@
     <button class="btn btn-primary" type="submit">Import emails from mail server</button>
 
 </form:form>
+
+<!-- ------------------------------------- -->
+
+<c:if test="${exception}">
+    <div class="padded_vert">
+        <div class="alert alert-danger">
+            <p>
+                An exception occurred during the import '${exceptionText}'.
+            </p>
+        </div>
+    </div>
+</c:if>
 
 <!-- ------------------------------------- -->
 <div class="centered">

@@ -58,11 +58,11 @@
         </tr>
         <tr>
             <td>index</td>
-            <td></td>
+            <td>${esIndex}</td>
         </tr>
         <tr>
             <td>type</td>
-            <td></td>
+            <td>${esType}</td>
         </tr>
     </table>
 

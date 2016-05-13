@@ -16,12 +16,20 @@ class EmailServerService {
     EmailService service
 
     void importEmails(final EmailServerProperties ep) {
-        final Long maxId = service.findMaximalId()
-        final Long startId = maxId + 1
+        service.createIndexIfNotExists()
+        Long startId = 0
+        try {
+            // in case the index does not exist, we catch this
+            startId = service.findMaximalId()
+            startId++
+        } catch (Exception e) {
+        } finally {
+        }
         importEmails(ep, startId)
     }
 
     Long importEmails(final EmailServerProperties ep, final Long startId) {
+        service.createIndexIfNotExists()
 
         def ir = new EmailServerReader(ep)
         ir.connect()

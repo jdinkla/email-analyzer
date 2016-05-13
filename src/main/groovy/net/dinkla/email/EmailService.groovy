@@ -28,4 +28,8 @@ class EmailService {
         repository.findMaximalId()
     }
 
+    void createIndexIfNotExists() {
+        repository.createIndexIfNotExists()
+    }
+
 }

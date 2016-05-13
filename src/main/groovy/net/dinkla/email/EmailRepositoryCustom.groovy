@@ -8,8 +8,10 @@ import net.dinkla.utils.Histogram
 interface EmailRepositoryCustom {
 
     // TODO add queries here for the web app
-    public Long findMaximalId()
+    Long findMaximalId()
 
-    public Histogram<String, Integer> getWeeklyHistogram(String topic)
+    Histogram<String, Integer> getWeeklyHistogram(String topic)
+
+    void createIndexIfNotExists()
 
 }

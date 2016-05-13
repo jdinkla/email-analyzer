@@ -1,6 +1,5 @@
 package net.dinkla.email
 
-import net.dinkla.Constants
 import net.dinkla.utils.Histogram
 import org.elasticsearch.action.search.SearchResponse
 import org.elasticsearch.action.search.SearchType
@@ -10,6 +9,7 @@ import org.elasticsearch.search.aggregations.bucket.histogram.DateHistogram
 import org.elasticsearch.search.aggregations.bucket.histogram.InternalDateHistogram
 import org.elasticsearch.search.aggregations.metrics.max.InternalMax
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.beans.factory.annotation.Value
 import org.springframework.data.elasticsearch.core.ElasticsearchTemplate
 import org.springframework.data.elasticsearch.core.ResultsExtractor
 import org.springframework.data.elasticsearch.core.query.NativeSearchQueryBuilder
@@ -24,10 +24,14 @@ import static org.elasticsearch.index.query.QueryBuilders.*
 @Repository
 class EmailRepositoryImpl implements EmailRepositoryCustom {
 
-    // TODO implement
-
     @Autowired
     ElasticsearchTemplate elasticsearchTemplate;
+
+    @Value('${emailanalyzer.index}')
+    String emailIndex
+
+    @Value('${emailanalyzer.type}')
+    String emailType
 
     /*
      * Find the maximal id
@@ -47,8 +51,8 @@ class EmailRepositoryImpl implements EmailRepositoryCustom {
         SearchQuery searchQuery = new NativeSearchQueryBuilder()
                 .withQuery(matchAllQuery())
                 .withSearchType(SearchType.COUNT)
-                .withIndices(Constants.EMAIL_INDEX)
-                .withTypes(Constants.EMAIL_TYPE)
+                .withIndices(emailIndex)
+                .withTypes(emailType)
                 .addAggregation(AggregationBuilders.max("max_id").field("id"))
                 .build();
         Aggregations aggregations = elasticsearchTemplate.query(searchQuery, new ResultsExtractor<Aggregations>() {
@@ -100,8 +104,8 @@ class EmailRepositoryImpl implements EmailRepositoryCustom {
         SearchQuery searchQuery = new NativeSearchQueryBuilder()
                 .withQuery(matchQuery("texts", topic))
                 .withSearchType(SearchType.COUNT)
-                .withIndices(Constants.EMAIL_INDEX)
-                .withTypes(Constants.EMAIL_TYPE)
+                .withIndices(emailIndex)
+                .withTypes(emailType)
                 .addAggregation(
                     AggregationBuilders.dateHistogram(topic)
                         .field("sentDate")
@@ -122,6 +126,12 @@ class EmailRepositoryImpl implements EmailRepositoryCustom {
             result.add(bucket.key, bucket.docCount)
         }
         return result;
+    }
+
+    void createIndexIfNotExists() {
+        if (!elasticsearchTemplate.indexExists(emailIndex)) {
+            elasticsearchTemplate.createIndex(emailIndex)
+        }
     }
 
 }
