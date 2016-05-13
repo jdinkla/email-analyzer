@@ -32,33 +32,36 @@
 
 <div class="box">
 
-    <p>Say something about Elasticsearch.</p>
+    <p>
+        This prototype shows how to read emails from an IMAP/POP3 provider into Elasticsearch and how to analyze them with
+        custom queries. The app is implemented with Spring Boot, Spring Data Elasticsearch, Spring MVC and JavaMail.
+        JSON data is processed with the Jackson library.
+
+        The source code is available at <a href="http://github.com/jdinkla/">github</a>.
+    </p>
 
 </div>
 
 <!-- ------------------------------------- -->
-<h2>Emails in Elasticsearch</h2>
+<h2>Emails loaded into Elasticsearch</h2>
 
 <div class="box">
 
     <p>
-        Connection to Elasticsearch
+        The connection to Elasticsearch is:
     </p>
 
     <table>
         <tr>
-            <td>nodes</td>
+            <td>node(s)</td>
             <td>${esNodes}</td>
-            <td>spring.data.elasticsearch.cluster-nodes</td>
         </tr>
         <tr>
             <td>index</td>
             <td></td>
-            <td></td>
         </tr>
         <tr>
             <td>type</td>
-            <td></td>
             <td></td>
         </tr>
     </table>
@@ -70,6 +73,14 @@
     <div class="alert alert-warning">
         <p>
             There are no emails in the database. You have to import them.
+        </p>
+    </div>
+</c:if>
+
+<c:if test="${numLoaded > 0}">
+    <div class="alert alert-success">
+        <p>
+            The import was successful and added ${numLoaded} emails to the database.
         </p>
     </div>
 </c:if>
@@ -86,53 +97,11 @@
     </form>
 </c:if>
 
-<!-- ------------------------------------- -->
-<form:form action="import" method="post" modelAttribute="emailServerProperties">
-
-    <div class="box">
-
-        <p>
-            Connection data for email storage: POP3 / IMAP / JavaMail
-        </p>
-
-        <p>
-            <strong>Warning:</strong> the password is transported unencrypted to web server. Only use in a private
-            and secure subnet.
-        </p>
-
-        <table>
-            <tr>
-                <td>protocol</td>
-                <td><form:input type="text" path="protocol" /></td>
-                <td><span name="protocol.errors">Field is required.</span></td>
-            </tr>
-            <tr>
-                <td>host</td>
-                <td><form:input type="text" path="host" /></td>
-                <td><span name="host.errors">Field is required.</span></td>
-            </tr>
-            <tr>
-                <td>user</td>
-                <td><form:input type="text" path="user" /></td>
-                <td><span name="user.errors">Field is required.</span></td>
-            </tr>
-            <tr>
-                <td>password</td>
-                <td><form:input type="text" path="password" /></td>
-                <td><span name="password.errors">Field is required.</span></td>
-            </tr>
-            <tr>
-                <td>folder</td>
-                <td><form:input type="text" path="folder" /></td>
-                <td><span name="folder.errors">Field is required.</span></td>
-            </tr>
-        </table>
-
-    </div>
-
-    <button class="btn btn-primary" type="submit">Import emails from mail server</button>
-
-</form:form>
+<div class="padded_vert">
+    <form action="/import" method="get">
+        <button class="btn btn-primary" type="submit" >Import emails from mail server</button>
+    </form>
+</div>
 
 <!-- ------------------------------------- -->
 <c:if test="${numberOfEmails > 0}">

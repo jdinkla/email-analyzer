@@ -33,28 +33,13 @@ class EmailController {
     @Autowired
     EmailServerService emailServerService
 
-    /*
-    @Autowired
-    ApplicationContext ctx;
-    */
-
     @Value('${spring.data.elasticsearch.cluster-nodes}')
     String esNodes
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
     def index(Model model) {
-        logger.info("index")
+        logger.info("GET index")
 
-        /*
-        Object o1 = System.getProperty("spring.mvc.view.suffix")
-        println "o1=$o1"
-        println "ctx=$ctx"
-        println "env=${ctx.environment}"
-        println "esNodes=$esNodes"
-        //model.timestamp = Date.newInstance()
-        */
-
-        model.emailServerProperties = new EmailServerProperties()
         model.numLoaded = 0
         model.numberOfEmails = service.repository.count()
         model.analyze = new Analyze()
@@ -62,6 +47,40 @@ class EmailController {
 
         "index"
     }
+
+    @RequestMapping(value = "/import", method = RequestMethod.GET)
+    def importEdit(Model model) {
+        logger.info("GET import")
+
+        model.esNodes = esNodes
+        model.emailServerProperties = new EmailServerProperties()
+
+        "import"
+    }
+
+    @RequestMapping(value = "/import", method = RequestMethod.POST)
+    def importRun(Model model, @Valid EmailServerProperties props, BindingResult result) {
+        logger.info("POST import")
+        logger.info("importRun: props=$props, result=$result")
+
+        if (result.hasErrors()) {
+            logger.warn("BindingResult has errors")
+            return "import"
+        }
+
+        // run the import
+
+
+        // if successful
+        // redirect to the start page
+        model.numLoaded = 1234
+        model.numberOfEmails = service.repository.count()
+        model.analyze = new Analyze()
+        model.esNodes = esNodes
+
+        "index"
+    }
+
 
     /*
     @RequestMapping(value = "/importTest", method = RequestMethod.POST)

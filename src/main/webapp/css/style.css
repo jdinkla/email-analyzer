@@ -28,6 +28,10 @@ body {
     padding: 1em;
 }
 
+.padded_vert {
+    padding: 1em 0em 1em 0em;
+}
+
 td {
     padding: 0.33em;
 }
