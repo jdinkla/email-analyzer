@@ -11,10 +11,11 @@ buildscript {
 }
 
 apply plugin: 'groovy'
-apply plugin: 'eclipse'
-apply plugin: 'spring-boot' 
+apply plugin: 'eclipse-wtp'
+apply plugin: 'spring-boot'
+apply plugin: 'war'
 
-jar {
+war {
 	baseName = 'emailanalyzer'
 	version = '0.0.1-SNAPSHOT'
 }
@@ -23,6 +24,10 @@ targetCompatibility = 1.8
 
 repositories {
 	mavenCentral()
+}
+
+configurations {
+    providedRuntime
 }
 
 
@@ -34,13 +39,19 @@ dependencies {
     // old compile 'org.elasticsearch:elasticsearch-groovy:1.7.5'                  // ES groovy API
 	//compile 'org.springframework.boot:spring-boot-starter-data-jpa'
 	compile 'org.springframework.boot:spring-boot-starter-mail'
-    compile('org.springframework.boot:spring-boot-starter-velocity')
+    //compile('org.springframework.boot:spring-boot-starter-velocity')
 	// compile('org.springframework.boot:spring-boot-starter-hateoas')
 	// compile('org.springframework.boot:spring-boot-starter-thymeleaf')
 	compile('org.springframework.boot:spring-boot-starter-web')
-	compile 'org.codehaus.groovy:groovy'
-	testCompile('org.springframework.boot:spring-boot-starter-test')
-	testCompile "org.spockframework:spock-core:1.0-groovy-2.4"
+    compile 'org.codehaus.groovy:groovy'
+
+    providedRuntime 'org.springframework.boot:spring-boot-starter-tomcat'
+    providedRuntime 'org.apache.tomcat.embed:tomcat-embed-jasper'
+    //providedRuntime('org.springframework.boot:spring-boot-starter-tomcat')
+    providedRuntime 'javax.servlet:jstl'
+
+    testCompile('org.springframework.boot:spring-boot-starter-test')
+    testCompile "org.spockframework:spock-core:1.0-groovy-2.4"
 }
 
 eclipse {

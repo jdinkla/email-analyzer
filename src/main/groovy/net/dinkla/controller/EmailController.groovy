@@ -7,6 +7,9 @@ import net.dinkla.utils.Analyze
 import org.apache.commons.logging.Log
 import org.apache.commons.logging.LogFactory
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.beans.factory.annotation.Value
+import org.springframework.boot.test.SpringApplicationConfiguration
+import org.springframework.context.ApplicationContext
 import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
 import org.springframework.validation.BindingResult
@@ -29,10 +32,22 @@ class EmailController {
     @Autowired
     EmailServerService emailServerService
 
+    @Autowired
+    ApplicationContext ctx;
+
+//    @Value( "${spring.mvc.view.prefix}" )
+    String pref = "pref"
+
     @RequestMapping(value = "/", method = RequestMethod.GET)
     def index(Model model) {
         logger.info("index")
-        model.addAttribute("name", "the name is bunny")
+
+        Object o1 = System.getProperty("spring.mvc.view.suffix")
+        println "o1=$o1"
+
+        println "ctx=$ctx"
+        println "env=${ctx.environment}"
+        println "pref=$pref"
 
         model.numLoaded = 0
         model.numberOfEmails = service.repository.count()
@@ -87,6 +102,12 @@ class EmailController {
         "index"
     }
 
+    @RequestMapping(value = "/error", method = RequestMethod.GET)
+    def error(Model model) {
+        model.status = "Status"
+        model.error = "Error"
+        "error"
+    }
 
 
 }

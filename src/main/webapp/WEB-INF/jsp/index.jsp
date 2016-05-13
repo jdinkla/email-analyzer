@@ -1,4 +1,16 @@
+<%--
+  Created by IntelliJ IDEA.
+  User: Dinkla
+  Date: 13.05.2016
+  Time: 14:25
+  To change this template use File | Settings | File Templates.
+--%>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
+
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <html lang="en">
 <head>
@@ -8,8 +20,8 @@
 
     <title>Analyze emails with Elasticsearch</title>
 
-    <link href="css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="css/style.css" media="all" type="text/css" />
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/bootstrap.min.css" >
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css" media="all" type="text/css" />
 
 </head>
 
@@ -27,13 +39,15 @@
 <!-- ------------------------------------- -->
 <h2>Data in Elasticsearch</h2>
 
-#if ( $numberOfEmails == 0)
+<c:if test="${numberOfEmails == 0}">
 <div class="alert alert-warning">
     <p>
         There are no emails in the database. You have to import them.
     </p>
 </div>
-#else
+</c:if>
+
+<c:if test="${numberOfEmails > 0}">
 <div class="alert alert-info">
     <p>
         There are ${numberOfEmails} emails loaded.
@@ -43,33 +57,19 @@
 <form action="/delete" method="post">
     <button class="btn btn-danger" type="submit">Delete emails</button>
 </form>
-#end
+</c:if>
 
 <!-- ------------------------------------- -->
 <h3>Import emails</h3>
 
-<div class="box">
+<form:form action="/import" method="post">
 
-    <p>
-        Connection datat for email storage: POP3 / IMAP / JavaMail
-    </p>
-    <form action="/import" method="post">
-        protocol: <input type="text" name="protocol"><br/>
-        host: <input type="text" name="host"><br/>
-        user: <input type="text" name="user"><br/>
-        password: <input type="text" name="password"><br/>
-        folder: <input type="text" name="folder"><br/>
-        <button class="btn btn-primary" type="submit">Import emails</button>
-    </form>
+    <div class="box">
 
-</div>
+        <p>
+            Connection datat for email storage: POP3 / IMAP / JavaMail
+        </p>
 
-<div class="box">
-
-    <p>
-        Connection datat for email storage: POP3 / IMAP / JavaMail
-    </p>
-    <form:form action="/import" method="post">
         <table>
             <tr>
                 <td>protocol</td>
@@ -97,31 +97,46 @@
                 <td><span name="folder.errors">Field is required.</span></td>
             </tr>
         </table>
-        <div class="padded">
-            <button class="btn btn-primary" type="submit">Import emails</button>
-        </div>
-    </form:form>
 
-</div>
-
-<!-- ------------------------------------- -->
-#if ( $numberOfEmails > 0)
-<h2>Analyse emails</h2>
-
-<div class="box">
-
-    <p>Enter the topics seperated by white space:</p>
-
-    <form action="/analyse" method="post">
-        topics: <input type="text" name="topics"><br/>
-        <button class="btn btn-primary" type="submit">Analyze</button>
-    </form>
-
-    <div id="graph">
     </div>
 
+    <button class="btn btn-primary" type="submit">Import emails</button>
+
+</form:form>
+
+
+<!-- ------------------------------------- -->
+<c:if test="${numberOfEmails > 0}">
+<h2>Analyse emails</h2>
+
+<form:form action="/analyse" method="post">
+
+    <div class="box">
+
+        <p>
+            Enter the topics seperated by white space:
+        </p>
+
+        <table>
+            <tr>
+                <td>topics</td>
+                <td><input type="text" name="topics" size="40"></td>
+                <td><span name="protocol.errors">Field is required.</span></td>
+            </tr>
+
+        </table>
+
+    </div>
+
+    <button class="btn btn-primary" type="submit">Analyze</button>
+
+</form:form>
+
+<div id="graph">
 </div>
-#end
+
+</c:if>
+
 
 <!-- ------------------------------------- -->
 <h2>Rest</h2>

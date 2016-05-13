@@ -7,11 +7,13 @@ import net.dinkla.imap.EmailServerService
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.SpringApplication
 import org.springframework.boot.autoconfigure.SpringBootApplication
+import org.springframework.boot.builder.SpringApplicationBuilder
+import org.springframework.boot.context.web.SpringBootServletInitializer
 
 import java.time.Instant
 
 @SpringBootApplication
-class EmailAnalyzerWebApplication {
+class EmailAnalyzerWebApplication extends SpringBootServletInitializer  {
 
     @Autowired
     EmailService service
@@ -57,7 +59,12 @@ class EmailAnalyzerWebApplication {
         service.repository.deleteAll();
     }
 
-	static void main(String[] args) {
+    @Override
+    protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
+        return application.sources(EmailAnalyzerWebApplication.class);
+    }
+
+    static void main(String[] args) {
 		SpringApplication.run EmailAnalyzerWebApplication, args
 	}
 
