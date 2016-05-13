@@ -39,6 +39,10 @@
         There are ${numberOfEmails} emails loaded.
     </p>
 </div>
+
+<form action="/delete" method="post">
+    <button class="btn btn-danger" type="submit">Delete emails</button>
+</form>
 #end
 
 <!-- ------------------------------------- -->
@@ -54,27 +58,70 @@
         host: <input type="text" name="host"><br/>
         user: <input type="text" name="user"><br/>
         password: <input type="text" name="password"><br/>
-
+        folder: <input type="text" name="folder"><br/>
         <button class="btn btn-primary" type="submit">Import emails</button>
     </form>
 
 </div>
 
-#if ( $numberOfEmails > 0)
-<form action="/delete" method="post">
-    <button class="btn btn-danger" type="submit">Delete emails</button>
-</form>
-#end
+<div class="box">
+
+    <p>
+        Connection datat for email storage: POP3 / IMAP / JavaMail
+    </p>
+    <form:form action="/import" method="post">
+        <table>
+            <tr>
+                <td>protocol</td>
+                <td><input type="text" name="protocol"></td>
+                <td><span name="protocol.errors">Field is required.</span></td>
+            </tr>
+            <tr>
+                <td>host</td>
+                <td><input type="text" name="host"></td>
+                <td><span name="host.errors">Field is required.</span></td>
+            </tr>
+            <tr>
+                <td>user</td>
+                <td><input type="text" name="user"></td>
+                <td><span name="user.errors">Field is required.</span></td>
+            </tr>
+            <tr>
+                <td>password</td>
+                <td><input type="text" name="password"></td>
+                <td><span name="password.errors">Field is required.</span></td>
+            </tr>
+            <tr>
+                <td>folder</td>
+                <td><input type="text" name="folder"></td>
+                <td><span name="folder.errors">Field is required.</span></td>
+            </tr>
+        </table>
+        <div class="padded">
+            <button class="btn btn-primary" type="submit">Import emails</button>
+        </div>
+    </form:form>
+
+</div>
 
 <!-- ------------------------------------- -->
+#if ( $numberOfEmails > 0)
 <h2>Analyse emails</h2>
 
 <div class="box">
 
-    <p>Analyze here</p>
+    <p>Enter the topics seperated by white space:</p>
+
+    <form action="/analyse" method="post">
+        topics: <input type="text" name="topics"><br/>
+        <button class="btn btn-primary" type="submit">Analyze</button>
+    </form>
+
+    <div id="graph">
+    </div>
 
 </div>
-
+#end
 
 <!-- ------------------------------------- -->
 <h2>Rest</h2>
@@ -110,7 +157,9 @@
 
 </div>
 
-
+<div>
+    Copyright © 2016 Jörn Dinkla, <a href="http://www.dinkla.com">www.dinkla.com</a>
+</div>
 
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>

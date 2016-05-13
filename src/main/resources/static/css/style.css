@@ -23,3 +23,11 @@ body {
     margin: 0.33em;
     padding: 0em;
 }
+
+.padded {
+    padding: 1em;
+}
+
+td {
+    padding: 0.33em;
+}

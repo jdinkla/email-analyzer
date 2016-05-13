@@ -1,5 +1,6 @@
 package net.dinkla.email
 
+import net.dinkla.imap.EmailServerProperties
 import spock.lang.Specification
 
 /**
@@ -7,7 +8,7 @@ import spock.lang.Specification
  */
 class EmailPropsSpec extends Specification {
 
-    def ep = EmailProps.readFromFile('test_secret.properties')
+    def ep = EmailServerProperties.readFromFile('test_secret.properties')
 
     def "protocol"() {
         expect: ep.protocol == 'protocol'

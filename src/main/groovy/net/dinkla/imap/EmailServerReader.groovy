@@ -2,7 +2,6 @@ package net.dinkla.imap
 
 import net.dinkla.email.Email
 import net.dinkla.email.EmailFolder
-import net.dinkla.email.EmailProps
 import net.dinkla.email.EmailUtils
 
 import javax.mail.Folder
@@ -13,16 +12,16 @@ import javax.mail.Store
 /**
  * Created by Dinkla on 10.05.2016.
  */
-class ImapReader {
+class EmailServerReader {
 
     static boolean debug = false
 
-    EmailProps ep
+    EmailServerProperties ep
 
     Store store
     Session session
 
-    ImapReader(EmailProps ep) {
+    EmailServerReader(EmailServerProperties ep) {
         this.ep = ep
     }
 
@@ -79,10 +78,10 @@ class ImapReader {
     }
 
     public static void main(String[] args) {
-        final EmailProps ep = EmailProps.readFromFile('secret.properties')
+        final EmailServerProperties ep = EmailServerProperties.readFromFile('secret.properties')
         final String folderName = "Akquise"
 
-        def ir = new ImapReader(ep)
+        def ir = new EmailServerReader(ep)
         ir.connect()
         EmailFolder folder = ir.read(folderName)
 

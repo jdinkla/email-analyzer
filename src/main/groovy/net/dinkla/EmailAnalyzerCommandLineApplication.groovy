@@ -1,16 +1,4 @@
 package net.dinkla
-
-import net.dinkla.email.Email
-import net.dinkla.email.EmailProps
-import net.dinkla.email.EmailService
-import net.dinkla.imap.ImapService
-import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.boot.CommandLineRunner
-import org.springframework.boot.SpringApplication
-import org.springframework.boot.autoconfigure.SpringBootApplication
-
-import java.time.Instant
-
 //@SpringBootApplication
 /*
 class EmailAnalyzerCommandLineApplication implements CommandLineRunner {
@@ -50,12 +38,12 @@ class EmailAnalyzerCommandLineApplication implements CommandLineRunner {
 
 
     void importEmails() {
-        final EmailProps ep = EmailProps.readFromFile('secret.properties')
+        final EmailServerProperties ep = EmailServerProperties.readFromFile('secret.properties')
         final String folderName = "Akquise"
         importEmails(ep, folderName)
     }
 
-    void importEmails(final EmailProps ep, final String folderName) {
+    void importEmails(final EmailServerProperties ep, final String folderName) {
         final Long maxId = service.repository.findMaximalId()
         final Long startId = maxId + 1
         imaps.importEmails(ep, folderName, startId)

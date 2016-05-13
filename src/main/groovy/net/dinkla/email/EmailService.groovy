@@ -12,17 +12,20 @@ class EmailService {
     @Autowired
     EmailRepository repository
 
-    public Email findById(Long id) {
+    Email findById(Long id) {
         repository.findById(id)
     }
 
-    public List<Email> findBySubjectLike(String subject) {
+    List<Email> findBySubjectLike(String subject) {
         repository.findBySubjectLike(subject)
     }
 
-    public void add(Email email) {
+    void add(Email email) {
         repository.save(email);
     }
 
+    Long findMaximalId() {
+        repository.findMaximalId()
+    }
 
 }
