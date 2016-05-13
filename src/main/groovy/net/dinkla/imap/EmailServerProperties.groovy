@@ -3,16 +3,22 @@ package net.dinkla.imap
 import org.hibernate.validator.constraints.NotBlank
 
 import javax.validation.constraints.NotNull
+import javax.validation.constraints.Size
 
+// TODO java.validation understand better, more info
+// TODO are hibernate validations used?
 /**
  * Created by Dinkla on 10.05.2016.
  */
 class EmailServerProperties {
 
     @NotNull
+    @NotBlank
+    @Size(min=2)
     String protocol
 
     @NotNull
+    @NotBlank
     String host
 
     @NotNull
@@ -48,7 +54,8 @@ class EmailServerProperties {
                 properties.protocol,
                 properties.host,
                 properties.user,
-                properties.password)
+                properties.password,
+                "")
         return ep
     }
 

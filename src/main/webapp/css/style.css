@@ -36,3 +36,9 @@ h1, h2, h3 {
     font-family: Verdana, Tahoma, "DejaVu Sans", Lucida;
     font-weight: normal;
 }
+
+.centered {
+    text-align: center;
+    margin: 1em 0em 1em 0em;
+}
+

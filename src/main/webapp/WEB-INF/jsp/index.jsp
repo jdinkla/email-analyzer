@@ -8,8 +8,8 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
 
-<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
-<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<!-- %@ taglib prefix="spring" uri="http://www.springframework.org/tags" %-->
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <html lang="en">
@@ -37,143 +37,141 @@
 </div>
 
 <!-- ------------------------------------- -->
-<h2>Data in Elasticsearch</h2>
+<h2>Emails in Elasticsearch</h2>
+
+<div class="box">
+
+    <p>
+        Connection to Elasticsearch
+    </p>
+
+    <table>
+        <tr>
+            <td>nodes</td>
+            <td>${esNodes}</td>
+            <td>spring.data.elasticsearch.cluster-nodes</td>
+        </tr>
+        <tr>
+            <td>index</td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>type</td>
+            <td></td>
+            <td></td>
+        </tr>
+    </table>
+
+</div>
+
 
 <c:if test="${numberOfEmails == 0}">
-<div class="alert alert-warning">
-    <p>
-        There are no emails in the database. You have to import them.
-    </p>
-</div>
+    <div class="alert alert-warning">
+        <p>
+            There are no emails in the database. You have to import them.
+        </p>
+    </div>
 </c:if>
 
 <c:if test="${numberOfEmails > 0}">
-<div class="alert alert-info">
-    <p>
-        There are ${numberOfEmails} emails loaded.
-    </p>
-</div>
+    <div class="alert alert-info">
+        <p>
+            There are ${numberOfEmails} emails loaded.
+        </p>
+    </div>
 
-<form action="/delete" method="post">
-    <button class="btn btn-danger" type="submit">Delete emails</button>
-</form>
+    <form action="/delete" method="post">
+        <button class="btn btn-danger" type="submit">Delete emails in database</button>
+    </form>
 </c:if>
 
 <!-- ------------------------------------- -->
-<h3>Import emails</h3>
-
-<form:form action="/import" method="post">
+<form:form action="import" method="post" modelAttribute="emailServerProperties">
 
     <div class="box">
 
         <p>
-            Connection datat for email storage: POP3 / IMAP / JavaMail
+            Connection data for email storage: POP3 / IMAP / JavaMail
+        </p>
+
+        <p>
+            <strong>Warning:</strong> the password is transported unencrypted to web server. Only use in a private
+            and secure subnet.
         </p>
 
         <table>
             <tr>
                 <td>protocol</td>
-                <td><input type="text" name="protocol"></td>
+                <td><form:input type="text" path="protocol" /></td>
                 <td><span name="protocol.errors">Field is required.</span></td>
             </tr>
             <tr>
                 <td>host</td>
-                <td><input type="text" name="host"></td>
+                <td><form:input type="text" path="host" /></td>
                 <td><span name="host.errors">Field is required.</span></td>
             </tr>
             <tr>
                 <td>user</td>
-                <td><input type="text" name="user"></td>
+                <td><form:input type="text" path="user" /></td>
                 <td><span name="user.errors">Field is required.</span></td>
             </tr>
             <tr>
                 <td>password</td>
-                <td><input type="text" name="password"></td>
+                <td><form:input type="text" path="password" /></td>
                 <td><span name="password.errors">Field is required.</span></td>
             </tr>
             <tr>
                 <td>folder</td>
-                <td><input type="text" name="folder"></td>
+                <td><form:input type="text" path="folder" /></td>
                 <td><span name="folder.errors">Field is required.</span></td>
             </tr>
         </table>
 
     </div>
 
-    <button class="btn btn-primary" type="submit">Import emails</button>
+    <button class="btn btn-primary" type="submit">Import emails from mail server</button>
 
 </form:form>
-
 
 <!-- ------------------------------------- -->
 <c:if test="${numberOfEmails > 0}">
-<h2>Analyse emails</h2>
+    <h2>Analyse emails</h2>
 
-<form:form action="/analyse" method="post">
+    <form action="/analyse" method="post">
 
-    <div class="box">
+        <div class="box">
 
-        <p>
-            Enter the topics seperated by white space:
-        </p>
+            <p>
+                Enter the topics seperated by white space:
+            </p>
 
-        <table>
-            <tr>
-                <td>topics</td>
-                <td><input type="text" name="topics" size="40"></td>
-                <td><span name="protocol.errors">Field is required.</span></td>
-            </tr>
+            <table>
+                <tr>
+                    <td>topics</td>
+                    <td><input type="text" name="topics" size="40" /></td>
+                    <td><span name="protocol.errors">Field is required.</span></td>
+                </tr>
 
-        </table>
+            </table>
 
+        </div>
+
+        <button class="btn btn-success" type="submit">Analyze</button>
+
+    </form>
+
+    <div id="graph">
     </div>
-
-    <button class="btn btn-primary" type="submit">Analyze</button>
-
-</form:form>
-
-<div id="graph">
-</div>
 
 </c:if>
 
 
 <!-- ------------------------------------- -->
-<h2>Rest</h2>
-
-<div class="box">
-
-    <p class="box-p">
-        Index says ${name}
+<div class="centered">
+    <p>
+        Copyright © 2016 Jörn Dinkla, <a href="http://www.dinkla.com">www.dinkla.com</a>
     </p>
-
-    <ul>
-        <li>Import emails from Imap provider</li>
-        <li>Analyse email data in Elasticsearch</li>
-    </ul>
-
-    <p class="box-p">
-        Import:
-            Email:    IMAP host, user, password, folder
-            ES: host, url, index, type
-    </p>
-
-    <p class="box-p">
-        Bisher: in application.propeties: spring.data.elasticsearch.cluster-nodes=ubuntu-desktop:9300
-    </p>
-
-    <p class="box-p">
-        Bisher: in Klasse index und type
-    </p>
-
-    <p class="box-p">
-        Bisher protocol, host, user, password
-    </p>
-
-</div>
-
-<div>
-    Copyright © 2016 Jörn Dinkla, <a href="http://www.dinkla.com">www.dinkla.com</a>
 </div>
 
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->

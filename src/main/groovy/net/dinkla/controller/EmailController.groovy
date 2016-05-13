@@ -4,6 +4,7 @@ import net.dinkla.email.EmailService
 import net.dinkla.imap.EmailServerProperties
 import net.dinkla.imap.EmailServerService
 import net.dinkla.utils.Analyze
+import org.apache.commons.lang.time.DateUtils
 import org.apache.commons.logging.Log
 import org.apache.commons.logging.LogFactory
 import org.springframework.beans.factory.annotation.Autowired
@@ -32,45 +33,58 @@ class EmailController {
     @Autowired
     EmailServerService emailServerService
 
+    /*
     @Autowired
     ApplicationContext ctx;
+    */
 
-//    @Value( "${spring.mvc.view.prefix}" )
-    String pref = "pref"
+    @Value('${spring.data.elasticsearch.cluster-nodes}')
+    String esNodes
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
     def index(Model model) {
         logger.info("index")
 
+        /*
         Object o1 = System.getProperty("spring.mvc.view.suffix")
         println "o1=$o1"
-
         println "ctx=$ctx"
         println "env=${ctx.environment}"
-        println "pref=$pref"
+        println "esNodes=$esNodes"
+        //model.timestamp = Date.newInstance()
+        */
 
+        model.emailServerProperties = new EmailServerProperties()
         model.numLoaded = 0
         model.numberOfEmails = service.repository.count()
+        model.analyze = new Analyze()
+        model.esNodes = esNodes
 
         "index"
     }
 
+    /*
     @RequestMapping(value = "/importTest", method = RequestMethod.POST)
     def importTest(Model model, @Valid EmailServerProperties props, BindingResult result) {
         logger.info("importTest: result=$result")
+        model.numLoaded = 0
+
         if (result.hasErrors()) {
             // handle errors
         }
         // test connection, then
-
+        model.emailServer = props
         model.tested = true
+
+        "index"
     }
 
     @RequestMapping(value = "/import", method = RequestMethod.POST)
     def importEmails(Model model, @Valid EmailServerProperties props, BindingResult result) {
-        logger.info("importEmails: result=$result")
+        logger.info("importEmails: props=$props, result=$result")
 
         if (result.hasErrors()) {
+            logger.warn("BindingResult has errors")
             // handle errors
         }
         try {
@@ -79,6 +93,7 @@ class EmailController {
             logger.error("Exception e=$e")
             model.error = e.toString()
         }
+        model.emailServer = props
         model.numberOfEmails = service.repository.count()
 
         "index"
@@ -109,5 +124,6 @@ class EmailController {
         "error"
     }
 
+    */
 
 }

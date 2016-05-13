@@ -1,6 +1,12 @@
 
 # Email analyzer
 
+TODO
+
+* ES config an einer Stelle
+* validation
+
+
 Reads email from an Imap-Provider with [JavaMail](https://java.net/projects/javamail/pages/Home), loads
 and analyzes them with [Elasticsearch](https://www.elastic.co/products/elasticsearch).
 
