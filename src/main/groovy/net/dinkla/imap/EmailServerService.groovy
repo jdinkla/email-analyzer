@@ -49,4 +49,8 @@ class EmailServerService {
         return numProcessed
     }
 
+    List<String> getProviders() {
+        EmailServerReader.getProviders()
+    }
+
 }

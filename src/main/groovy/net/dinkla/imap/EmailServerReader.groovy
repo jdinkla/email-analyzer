@@ -6,6 +6,7 @@ import net.dinkla.email.EmailUtils
 
 import javax.mail.Folder
 import javax.mail.Message
+import javax.mail.Provider
 import javax.mail.Session
 import javax.mail.Store
 
@@ -75,6 +76,17 @@ class EmailServerReader {
                 msgs.add(mmsg)
             }
         }
+    }
+
+    // returns the providers (imap, pop3, etc.)
+    static List<String> getProviders() {
+        List<String> result = []
+        Properties props = System.getProperties();
+        Session session = Session.getInstance(props, null);
+        for (Provider provider : session.getProviders()) {
+            result.add(provider.getProtocol())
+        }
+        return result
     }
 
     public static void main(String[] args) {

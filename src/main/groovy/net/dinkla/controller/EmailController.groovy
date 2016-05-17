@@ -1,16 +1,15 @@
 package net.dinkla.controller
 
+import com.fasterxml.jackson.databind.ObjectMapper
 import net.dinkla.email.EmailService
 import net.dinkla.imap.EmailServerProperties
 import net.dinkla.imap.EmailServerService
 import net.dinkla.utils.Analyze
-import org.apache.commons.lang.time.DateUtils
+import net.dinkla.utils.Graph
 import org.apache.commons.logging.Log
 import org.apache.commons.logging.LogFactory
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.beans.factory.annotation.Value
-import org.springframework.boot.test.SpringApplicationConfiguration
-import org.springframework.context.ApplicationContext
 import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
 import org.springframework.validation.BindingResult
@@ -53,7 +52,7 @@ class EmailController {
         model.esIndex = esIndex
         model.esType = esType
 
-        "index"
+        return "index"
     }
 
     @RequestMapping(value = "/import", method = RequestMethod.GET)
@@ -65,8 +64,9 @@ class EmailController {
         model.esIndex = esIndex
         model.esType = esType
         model.emailServerProperties = new EmailServerProperties()
+        model.protocolOptions = emailServerService.getProviders()
 
-        "import"
+        return "import"
     }
 
     @RequestMapping(value = "/import", method = RequestMethod.POST)
@@ -80,6 +80,8 @@ class EmailController {
             model.esIndex = esIndex
             model.esType = esType
             model.emailServerProperties = props
+            model.protocolOptions = emailServerService.getProviders()
+
             return "import"
         }
 
@@ -95,80 +97,39 @@ class EmailController {
             model.esIndex = esIndex
             model.esType = esType
             model.emailServerProperties = props
+            model.protocolOptions = emailServerService.getProviders()
+
             return "import"
         }
 
-        // if successful
-        // redirect to the start page
-        /*
-        model.numLoaded = 1234
-        model.numberOfEmails = service.repository.count()
-        model.analyze = new Analyze()
-        model.esNodes = esNodes
-        model.esIndex = esIndex
-        model.esType = esType
-        */
-
+        // if successful, redirect to the start page
         return "redirect:/index?numLoaded=${numLoaded}"
     }
 
-
-    /*
-    @RequestMapping(value = "/importTest", method = RequestMethod.POST)
-    def importTest(Model model, @Valid EmailServerProperties props, BindingResult result) {
-        logger.info("importTest: result=$result")
-        model.numLoaded = 0
-
-        if (result.hasErrors()) {
-            // handle errors
-        }
-        // test connection, then
-        model.emailServer = props
-        model.tested = true
-
-        "index"
-    }
-
-    @RequestMapping(value = "/import", method = RequestMethod.POST)
-    def importEmails(Model model, @Valid EmailServerProperties props, BindingResult result) {
-        logger.info("importEmails: props=$props, result=$result")
-
-        if (result.hasErrors()) {
-            logger.warn("BindingResult has errors")
-            // handle errors
-        }
-
-        model.emailServer = props
-        model.numberOfEmails = service.repository.count()
-
-        "index"
-    }
-
-    @RequestMapping(value = "/delete", method = RequestMethod.POST)
-    def delete(Model model) {
-        logger.info("delete")
-        model.numLoaded = 0
-        model.numberOfEmails = 0
-//        model.numberOfEmails = service.repository.count()
-        "redirect:/"
-    }
-
-    @RequestMapping(value = "/analyse", method = RequestMethod.POST)
+    @RequestMapping(value = "/analyse", method = RequestMethod.GET)
     def analyse(Model model, @Valid Analyze topics, BindingResult result) {
         logger.info("analyse topics=$topics")
-        model.numLoaded = 0
-        model.numberOfEmails = 0
-//        model.numberOfEmails = service.repository.count()
-        "index"
+
+        final def dates = ["2016-01-01 00:00:00.000000", "2016-02-01 00:00:00.000000", "2016-03-01 00:00:00.000000", "2016-04-01 00:00:00.000000"]
+
+        def t0 = new Graph()
+        t0.x = dates
+        t0.y = [10, 15, 13, 17]
+        t0.type = 'scatter'
+        t0.name = 'Java'
+
+        def t1 = new Graph()
+        t1.x = dates
+        t1.y = [16, 5, 11, 9]
+        t1.type = 'scatter'
+        t1.mode = 'lines+markers'
+        t1.name = 'C++'
+
+        //model.data = [t0, t1]
+        ObjectMapper mapper = new ObjectMapper()
+        model.data = [mapper.writeValueAsString(t0), mapper.writeValueAsString(t1)]
+        "analyze"
     }
 
-    @RequestMapping(value = "/error", method = RequestMethod.GET)
-    def error(Model model) {
-        model.status = "Status"
-        model.error = "Error"
-        "error"
-    }
-
-    */
 
 }

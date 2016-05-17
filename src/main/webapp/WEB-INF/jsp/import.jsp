@@ -9,7 +9,7 @@
 <!DOCTYPE html>
 
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-<!-- %@ taglib prefix="spring" uri="http://www.springframework.org/tags" %-->
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <html lang="en">
@@ -30,7 +30,8 @@
 <!-- ------------------------------------- -->
 <h1>Import emails into Elasticsearch</h1>
 
-<form:form action="import" method="post" modelAttribute="emailServerProperties">
+<spring:url value="/import" var="importURL" />
+<form:form action="${importURL}" method="post" modelAttribute="emailServerProperties">
 
     <h3>Connection to Elasticsearch</h3>
 
@@ -70,27 +71,29 @@
         <table>
             <tr>
                 <td>protocol</td>
-                <td><form:input type="text" path="protocol" /></td>
+                <td>
+                    <form:select path="protocol" items="${protocolOptions}" cssClass="form-control" />
+                </td>
                 <td class="validation-error"><form:errors path="protocol" cssClass="validation-error" /></td>
             </tr>
             <tr>
                 <td>host</td>
-                <td><form:input type="text" path="host" /></td>
+                <td><form:input type="text" path="host" cssClass="form-control" /></td>
                 <td class="validation-error"><form:errors path="host" cssClass="validation-error" /></td>
             </tr>
             <tr>
                 <td>user</td>
-                <td><form:input type="text" path="user" /></td>
+                <td><form:input type="text" path="user" cssClass="form-control" /></td>
                 <td class="validation-error"><form:errors path="user" cssClass="validation-error" /></td>
             </tr>
             <tr>
                 <td>password</td>
-                <td><form:input type="password" path="password" /></td>
+                <td><form:input type="password" path="password" cssClass="form-control"  /></td>
                 <td class="validation-error"><form:errors path="password" cssClass="validation-error" /></td>
             </tr>
             <tr>
                 <td>folder</td>
-                <td><form:input type="text" path="folder" /></td>
+                <td><form:input type="text" path="folder" cssClass="form-control" /></td>
                 <td class="validation-error"><form:errors path="folder" cssClass="validation-error" /></td>
             </tr>
         </table>

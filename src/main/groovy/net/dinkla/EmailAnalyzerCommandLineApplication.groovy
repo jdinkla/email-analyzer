@@ -32,8 +32,8 @@ class EmailAnalyzerCommandLineApplication implements CommandLineRunner {
     }
 
     void testCustomRepositoryAggregation() {
-        def xs = service.repository.getWeeklyHistogram("Scala")
-        println "getWeeklyHistogram returned: $xs"
+        def x = service.repository.getWeeklyHistogram("Scala")
+        println "getWeeklyHistogram returned: $x"
     }
 
 

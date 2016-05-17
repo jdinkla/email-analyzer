@@ -16,6 +16,9 @@ import org.springframework.data.elasticsearch.core.query.NativeSearchQueryBuilde
 import org.springframework.data.elasticsearch.core.query.SearchQuery
 import org.springframework.stereotype.Repository
 
+import org.apache.commons.logging.Log
+import org.apache.commons.logging.LogFactory
+
 import static org.elasticsearch.index.query.QueryBuilders.*
 
 /**
@@ -23,6 +26,8 @@ import static org.elasticsearch.index.query.QueryBuilders.*
  */
 @Repository
 class EmailRepositoryImpl implements EmailRepositoryCustom {
+
+    private static Log log = LogFactory.getLog(EmailRepositoryImpl.class)
 
     @Autowired
     ElasticsearchTemplate elasticsearchTemplate;
@@ -130,7 +135,10 @@ class EmailRepositoryImpl implements EmailRepositoryCustom {
 
     void createIndexIfNotExists() {
         if (!elasticsearchTemplate.indexExists(emailIndex)) {
-            elasticsearchTemplate.createIndex(emailIndex)
+            log.info("Index '$emailIndex' does not exist in Elastiksearch")
+            //elasticsearchTemplate.createIndex(emailIndex)
+            boolean b = elasticsearchTemplate.createIndex(emailIndex, Email.class)
+            log.info("Creation of '$emailIndex' in Elastiksearch was " + (b ? "successful" : " not successful"))
         }
     }
 
