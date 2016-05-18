@@ -16,4 +16,18 @@ class Graph {
     String mode
     String name
 
+    Graph() {
+    }
+
+    Graph(final Histogram<String, Integer> hist) {
+        assert(hist)
+        name = hist.name
+        x = []
+        y = []
+        for (Tuple2<String, Integer> p : hist.pairs) {
+            x.add(p.first)
+            y.add(p.second)
+        }
+    }
+
 }

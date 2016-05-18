@@ -1,5 +1,6 @@
 package net.dinkla.email
 
+import net.dinkla.Constants
 import net.dinkla.utils.Histogram
 import org.elasticsearch.action.search.SearchResponse
 import org.elasticsearch.action.search.SearchType
@@ -32,11 +33,8 @@ class EmailRepositoryImpl implements EmailRepositoryCustom {
     @Autowired
     ElasticsearchTemplate elasticsearchTemplate;
 
-    @Value('${emailanalyzer.index}')
-    String emailIndex
-
-    @Value('${emailanalyzer.type}')
-    String emailType
+    String emailIndex = Constants.EMAIL_INDEX
+    String emailType = Constants.EMAIL_TYPE
 
     /*
      * Find the maximal id

@@ -30,8 +30,21 @@
 <!-- ------------------------------------- -->
 <h1>Analyze emails with Elasticsearch</h1>
 
-<div class="box">
+<c:if test="${exception}">
+    <div class="padded_vert">
+        <div class="alert alert-danger">
+            <p>
+                An exception occurred during the analysis:
+            </p>
+            <p>
+                '${exceptionText}'.
+            </p>
+        </div>
+    </div>
+</c:if>
 
+
+<div class="box">
 
     <p id="theDataLength">
         The query returned ? elements with data for ? dates.
@@ -44,6 +57,8 @@
         This chart was created with <a href="https://plot.ly/">Plotly</a>.
     </p>
 </div>
+
+<%@ include file="analyze_form.jsp" %>
 
 <script>
     var trace1 = {

@@ -15,7 +15,9 @@ class EmailServerService {
     @Autowired
     EmailService service
 
-    void importEmails(final EmailServerProperties ep) {
+    List<String> providersCache;
+
+    Long importEmails(final EmailServerProperties ep) {
         service.createIndexIfNotExists()
         Long startId = 0
         try {
@@ -25,7 +27,7 @@ class EmailServerService {
         } catch (Exception e) {
         } finally {
         }
-        importEmails(ep, startId)
+        return importEmails(ep, startId)
     }
 
     Long importEmails(final EmailServerProperties ep, final Long startId) {
@@ -50,7 +52,10 @@ class EmailServerService {
     }
 
     List<String> getProviders() {
-        EmailServerReader.getProviders()
+        if (!providersCache) {
+            providersCache = EmailServerReader.getProviders()
+        }
+        providersCache
     }
 
 }

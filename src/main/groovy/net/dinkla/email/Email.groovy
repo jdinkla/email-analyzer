@@ -11,8 +11,7 @@ import org.springframework.data.elasticsearch.annotations.FieldType
 /**
  * Created by Dinkla on 10.05.2016.
  */
-@Document(indexName = '${emailanalyzer.index}', type = '${emailanalyzer.type}')
-//@Document(indexName = Constants.emailIndex, type = Constants.emailType)
+@Document(indexName = Constants.EMAIL_INDEX, type = Constants.EMAIL_TYPE)
 class Email {
 
     // Spring Data seems to need an @Id, so we use a surrogate one
@@ -26,12 +25,12 @@ class Email {
     List<EmailAddress> froms
     String subject
 
-    @Field(type=FieldType.Date, format=DateFormat.custom, pattern = '${emailanalyzer.dateFormat}')
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = '${emailanalyzer.dateFormat}')
+    @Field(type=FieldType.Date, format=DateFormat.custom, pattern = Constants.DATE_FORMAT)
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = Constants.DATE_FORMAT)
     Date sentDate
 
-    @Field(type=FieldType.Date, format=DateFormat.custom, pattern = '${emailanalyzer.dateFormat}')
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = '${emailanalyzer.dateFormat}')
+    @Field(type=FieldType.Date, format=DateFormat.custom, pattern = Constants.DATE_FORMAT)
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = Constants.DATE_FORMAT)
     Date receivedDate
 
     List<String> texts

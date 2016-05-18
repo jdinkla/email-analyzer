@@ -1,13 +1,24 @@
 package net.dinkla
+
+import net.dinkla.email.Email
+import net.dinkla.email.EmailService
+import net.dinkla.imap.EmailServerProperties
+import net.dinkla.imap.EmailServerService
+import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.boot.CommandLineRunner
+import org.springframework.boot.SpringApplication
+import org.springframework.boot.autoconfigure.SpringBootApplication
+import org.springframework.context.annotation.ComponentScan
+
 //@SpringBootApplication
-/*
+@ComponentScan
 class EmailAnalyzerCommandLineApplication implements CommandLineRunner {
 
     @Autowired
     EmailService service
 
     @Autowired
-    ImapService imaps
+    EmailServerService imaps
 
     void testCreate() {
         // add an email
@@ -55,11 +66,11 @@ class EmailAnalyzerCommandLineApplication implements CommandLineRunner {
 
 	@Override
 	void run(String... args) throws Exception {
+        println("RUN RUN RUN")
         //deleteAll()
         //importEmails()
-
-        testCustomRepositoryAggregation()
-
+        //testCustomRepositoryAggregation()
+        testCustomRepositoryFindId()
     }
 
 	static void main(String[] args) {
@@ -67,4 +78,4 @@ class EmailAnalyzerCommandLineApplication implements CommandLineRunner {
 	}
 
 }
-*/
+

@@ -76,10 +76,10 @@
     </div>
 </c:if>
 
-<c:if test="${numLoaded > 0}">
+<c:if test="${numImported > 0}">
     <div class="alert alert-success">
         <p>
-            The import was successful and added ${numLoaded} emails to the database.
+            The import was successful and added ${numImported} emails to the database.
         </p>
     </div>
 </c:if>
@@ -104,36 +104,8 @@
 
 <!-- ------------------------------------- -->
 <c:if test="${numberOfEmails > 0}">
-    <h2>Analyse emails</h2>
-
-    <form action="/analyse" method="post">
-
-        <div class="box">
-
-            <p>
-                Enter the topics seperated by white space:
-            </p>
-
-            <table>
-                <tr>
-                    <td>topics</td>
-                    <td><input type="text" name="topics" size="40" /></td>
-                    <td><span name="protocol.errors">Field is required.</span></td>
-                </tr>
-
-            </table>
-
-        </div>
-
-        <button class="btn btn-success" type="submit">Analyze</button>
-
-    </form>
-
-    <div id="graph">
-    </div>
-
+    <%@ include file="analyze_form.jsp" %>
 </c:if>
-
 
 <!-- ------------------------------------- -->
 <div class="centered">

@@ -1,5 +1,6 @@
 package net.dinkla.email
 
+import net.dinkla.utils.Histogram
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 
@@ -26,6 +27,10 @@ class EmailService {
 
     Long findMaximalId() {
         repository.findMaximalId()
+    }
+
+    Histogram<String, Integer> getWeeklyHistogram(String topic) {
+        repository.getWeeklyHistogram(topic)
     }
 
     void createIndexIfNotExists() {

@@ -38,4 +38,29 @@ class GraphSpec extends Specification {
         expect: result.size() > 0
     }
 
+    def createHist() {
+        def hist = new Histogram<String, Integer>()
+        hist.name = "ABC"
+        hist.add("A", 3)
+        hist.add("B", 2)
+        hist.add("C", 1)
+        return hist
+    }
+
+    def "construct from Histogram #1"() {
+        def hist1 = createHist()
+        def graph1 = new Graph(hist1)
+        expect: graph1.name == hist1.name
+        and: graph1.x == [ "A", "B", "C" ]
+        and: graph1.y == [ 3, 2, 1 ]
+    }
+
+    def "construct from Histogram #2"() {
+        def hist1 = new Histogram<String, Integer>()
+        def graph1 = new Graph(hist1)
+        expect: graph1.name == hist1.name
+        and: graph1.x == []
+        and: graph1.y == []
+    }
+
 }
