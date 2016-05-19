@@ -30,7 +30,7 @@ import java.text.SimpleDateFormat
 @Controller
 class EmailController {
 
-    static Log logger = LogFactory.getLog(EmailController.class)
+    static final Log logger = LogFactory.getLog(EmailController.class)
 
     @Autowired
     EmailService service
@@ -41,8 +41,8 @@ class EmailController {
     @Value('${spring.data.elasticsearch.cluster-nodes}')
     String esNodes
 
-    String esIndex = Constants.EMAIL_INDEX
-    String esType = Constants.EMAIL_TYPE
+    final String esIndex = Constants.EMAIL_INDEX
+    final String esType = Constants.EMAIL_TYPE
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
     def index(Model model, @RequestParam(value = "numImported", required = false) Integer numImported) {
@@ -89,9 +89,9 @@ class EmailController {
         }
 
         // run the import
-        Long numLoaded = 0
+        Long numImported = 0
         try {
-            numLoaded = emailServerService.importEmails(props)
+            numImported = emailServerService.importEmails(props)
         } catch (Exception e) {
             logger.error("Exception e=$e")
             model.exception = true
@@ -106,7 +106,7 @@ class EmailController {
         }
 
         // if successful, redirect to the start page
-        return "redirect:/?numLoaded=${numLoaded}"
+        return "redirect:/?numImported=${numImported}"
     }
 
     @RequestMapping(value = "/analyze", method = RequestMethod.POST)
@@ -148,30 +148,11 @@ class EmailController {
         return "analyze"
     }
 
-    @RequestMapping(value = "/analyze", method = RequestMethod.GET)
-    def analyzeX(Model model, @Valid AnalyzeParameters topics, BindingResult result) {
-        logger.info("analyse topics=$topics")
+    @RequestMapping(value = "/delete", method = RequestMethod.POST)
+    def delete(Model model) {
 
-        final def dates = ["2016-01-01 00:00:00.000000", "2016-02-01 00:00:00.000000", "2016-03-01 00:00:00.000000", "2016-04-01 00:00:00.000000"]
-
-        def t0 = new Graph()
-        t0.x = dates
-        t0.y = [10, 15, 13, 17]
-        t0.type = 'scatter'
-        t0.name = 'Java'
-
-        def t1 = new Graph()
-        t1.x = dates
-        t1.y = [16, 5, 11, 9]
-        t1.type = 'scatter'
-        t1.mode = 'lines+markers'
-        t1.name = 'C++'
-
-        //model.data = [t0, t1]
-        ObjectMapper mapper = new ObjectMapper()
-        model.data = [mapper.writeValueAsString(t0), mapper.writeValueAsString(t1)]
-        model.analyzeParameters = topics
-        return "analyze"
+        service.deleteAll();
+        return "redirect:/"
     }
 
     @RequestMapping(value = "/debug_create", method = RequestMethod.GET)

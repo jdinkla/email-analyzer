@@ -33,14 +33,8 @@ class EmailService {
         repository.getWeeklyHistogram(topic)
     }
 
-    void createIndexIfNotExists() {
-        repository.createIndexIfNotExists()
-        // create the mapping using Spring Data Elasticsearch
-        Email test = new Email()
-        test.id = 12356789
-        repository.save(test)
-        // now delete it again
-        repository.delete(test)
+    void deleteAll() {
+        repository.deleteAll();
     }
 
 }

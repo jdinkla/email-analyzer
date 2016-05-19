@@ -18,7 +18,6 @@ class EmailServerService {
     List<String> providersCache;
 
     Long importEmails(final EmailServerProperties ep) {
-        service.createIndexIfNotExists()
         Long startId = 0
         try {
             // in case the index does not exist, we catch this
@@ -31,8 +30,6 @@ class EmailServerService {
     }
 
     Long importEmails(final EmailServerProperties ep, final Long startId) {
-        service.createIndexIfNotExists()
-
         def ir = new EmailServerReader(ep)
         ir.connect()
         EmailFolder folder = ir.read(ep.folder)

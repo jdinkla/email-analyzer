@@ -11,8 +11,4 @@ interface EmailRepository extends ElasticsearchRepository<Email, Long>, EmailRep
 
     public List<Email> findBySubjectLike(String subject);
 
-    // TODO declare a method using @Query
-
-    // TODO add queries here for the web app
-
 }

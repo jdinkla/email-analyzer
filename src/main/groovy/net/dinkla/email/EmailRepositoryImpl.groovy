@@ -76,7 +76,6 @@ class EmailRepositoryImpl implements EmailRepositoryCustom {
         WHERE topic IN topiclist
         GROUP BY dt, topic
 
-
         dt  topic
         1   A
         1   B
@@ -102,7 +101,6 @@ class EmailRepositoryImpl implements EmailRepositoryCustom {
         }
 
     */
-
     Histogram<String, Integer> getWeeklyHistogram(String topic) {
         SearchQuery searchQuery = new NativeSearchQueryBuilder()
                 .withQuery(matchQuery("texts", topic))
@@ -129,15 +127,6 @@ class EmailRepositoryImpl implements EmailRepositoryCustom {
             hist.add(bucket.key, bucket.docCount.intValue())
         }
         return hist;
-    }
-
-    void createIndexIfNotExists() {
-        if (!elasticsearchTemplate.indexExists(emailIndex)) {
-            log.info("Index '$emailIndex' does not exist in Elastiksearch")
-            //elasticsearchTemplate.createIndex(emailIndex)
-            boolean b = elasticsearchTemplate.createIndex(emailIndex, Email.class)
-            log.info("Creation of '$emailIndex' in Elastiksearch was " + (b ? "successful" : " not successful"))
-        }
     }
 
 }

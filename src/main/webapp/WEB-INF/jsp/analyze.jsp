@@ -1,15 +1,7 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: Dinkla
-  Date: 13.05.2016
-  Time: 14:25
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
 
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-<!-- %@ taglib prefix="spring" uri="http://www.springframework.org/tags" %-->
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <html lang="en">
@@ -62,32 +54,8 @@
 <%@ include file="analyze_form.jsp" %>
 
 <script>
-    var trace1 = {
-        x: [1, 2, 3, 4],
-        y: [10, 15, 13, 17],
-        type: 'scatter',
-        name: 'Java'
-    };
-    var trace2 = {
-        x: [1, 2, 3, 4],
-        y: [16, 5, 11, 9],
-        type: 'scatter',
-        mode: 'lines+markers',
-        name: 'C++'
-    };
-
-    var trace3 = {
-        x: ["2016-01-01 00:00:00.000000", "2016-02-01 00:00:00.000000", "2016-03-01 00:00:00.000000", "2016-04-01 00:00:00.000000"],
-        y: [16, 5, 11, 9],
-        type: 'scatter',
-        mode: 'lines+markers',
-        name: 'C++'
-    };
-    // "yyyy-mm-dd HH:MM:SS.ssssss"
-
     var layout = {
         title:'Number of emails containing the keywords \'${keywords}\'',
-        //autosize: true,
         xaxis: {
             title: 'Time',
             showgrid: true,
@@ -99,13 +67,18 @@
         }
     };
 
-    //var data = [trace1, trace2];
     var data = ${data}
     var numberOfSeries = data.length
-    var numberOfDates = data[0].x.length
-    $("#theDataLength").replaceWith("The query returned " + numberOfSeries + " elements with data for " + numberOfDates + " dates.")
+    $("#theDataLength").replaceWith("The query returned " + numberOfSeries + " time series")
     Plotly.newPlot('theChart', data, layout);
 </script>
+
+
+<div class="padded_vert">
+    <form action="/" method="get" >
+        <button class="btn btn-primary" type="submit" >Back to start page</button>
+    </form>
+</div>
 
 <!-- ------------------------------------- -->
 <div class="centered">
