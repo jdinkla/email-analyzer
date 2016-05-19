@@ -30,24 +30,16 @@ configurations {
     providedRuntime
 }
 
-
 dependencies {
-	//compile 'org.elasticsearch:elasticsearch:2.3.2'						// needed, otherwise spring boot uses 1.5
     compile 'com.fasterxml.jackson.core:jackson-core:2.6.4'
     compile 'com.fasterxml.jackson.core:jackson-databind:2.6.4'
 	compile 'org.springframework.boot:spring-boot-starter-data-elasticsearch'
-    // old compile 'org.elasticsearch:elasticsearch-groovy:1.7.5'                  // ES groovy API
-	//compile 'org.springframework.boot:spring-boot-starter-data-jpa'
 	compile 'org.springframework.boot:spring-boot-starter-mail'
-    //compile('org.springframework.boot:spring-boot-starter-velocity')
-	// compile('org.springframework.boot:spring-boot-starter-hateoas')
-	// compile('org.springframework.boot:spring-boot-starter-thymeleaf')
 	compile('org.springframework.boot:spring-boot-starter-web')
     compile 'org.codehaus.groovy:groovy'
 
     providedRuntime 'org.springframework.boot:spring-boot-starter-tomcat'
     providedRuntime 'org.apache.tomcat.embed:tomcat-embed-jasper'
-    //providedRuntime('org.springframework.boot:spring-boot-starter-tomcat')
     providedRuntime 'javax.servlet:jstl'
 
     testCompile('org.springframework.boot:spring-boot-starter-test')
@@ -63,5 +55,4 @@ eclipse {
 
 springBoot {
 	mainClass = "net.dinkla.EmailAnalyzerWebApplication"
-	//mainClass = "net.dinkla.EmailAnalyzerCommandLineApplication"
 }
