@@ -56,6 +56,7 @@
     <p>
         This chart was created with <a href="https://plot.ly/">Plotly</a>.
     </p>
+
 </div>
 
 <%@ include file="analyze_form.jsp" %>
@@ -85,7 +86,7 @@
     // "yyyy-mm-dd HH:MM:SS.ssssss"
 
     var layout = {
-        title:'Number of emails containing each keyword',
+        title:'Number of emails containing the keywords \'${keywords}\'',
         //autosize: true,
         xaxis: {
             title: 'Time',
@@ -93,7 +94,7 @@
             zeroline: true
         },
         yaxis: {
-            title: 'Number of emails',
+            title: 'Number of emails per week',
             showline: true
         }
     };

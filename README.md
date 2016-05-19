@@ -28,6 +28,12 @@ Run Elasticsearch in a container called `es-dev`
 docker run -d -v $HOME/docker/elastic-dev:/usr/share/elasticsearch/data -p 9200:9200 -p 9300:9300 --name es-dev elasticsearch:1.7
 ```
 
+or under Windows
+
+```
+docker run --name es-dev -d -v C:\virtual\docker\es-dev:/usr/share/elasticsearch/data -p 9200:9200 -p 9300:9300 elasticsearch:1.7
+```
+
 Add [kibana](https://www.elastic.co/products/kibana) with
 
 ```

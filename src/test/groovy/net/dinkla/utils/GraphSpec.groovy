@@ -11,13 +11,13 @@ class GraphSpec extends Specification {
     final def dates = ["2016-01-01 00:00:00.000000", "2016-02-01 00:00:00.000000", "2016-03-01 00:00:00.000000", "2016-04-01 00:00:00.000000"]
 
     def createExamples() {
-        def t0 = new Graph()
+        def t0 = new Graph<String, Integer>()
         t0.x = dates
         t0.y = [10, 15, 13, 17]
         t0.type = 'scatter'
         t0.name = 'Java'
 
-        def t1 = new Graph()
+        def t1 = new Graph<String, Integer>()
         t1.x = dates
         t1.y = [16, 5, 11, 9]
         t1.type = 'scatter'

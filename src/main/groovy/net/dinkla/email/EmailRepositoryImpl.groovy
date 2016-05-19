@@ -122,13 +122,13 @@ class EmailRepositoryImpl implements EmailRepositoryCustom {
             }
         });
         Map a = aggregations.asMap()
-        InternalDateHistogram hist = a[topic]
+        InternalDateHistogram tmpHist = a[topic]
         // extract the histogram
-        def result = new Histogram<String, Integer>(topic)
-        for (def bucket : hist.buckets) {
-            result.add(bucket.key, bucket.docCount)
+        def hist = new Histogram<String, Integer>(topic)
+        for (def bucket : tmpHist.buckets) {
+            hist.add(bucket.key, bucket.docCount.intValue())
         }
-        return result;
+        return hist;
     }
 
     void createIndexIfNotExists() {

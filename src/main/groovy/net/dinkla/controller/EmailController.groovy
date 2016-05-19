@@ -9,6 +9,7 @@ import net.dinkla.imap.EmailServerProperties
 import net.dinkla.imap.EmailServerService
 import net.dinkla.utils.AnalyzeParameters
 import net.dinkla.utils.Graph
+import net.dinkla.utils.Histogram
 import org.apache.commons.logging.Log
 import org.apache.commons.logging.LogFactory
 import org.springframework.beans.factory.annotation.Autowired
@@ -115,31 +116,34 @@ class EmailController {
         if (bindingResult.hasErrors()) {
             model.exception = false
             model.analyzeParameters = params
+            model.keywords = params.topics
             return "analyze"
         }
 
         // query the database
         ObjectMapper mapper = new ObjectMapper()
-        def graphsJSON = []
+        def jsons = []
         try {
             def topics = params.split()
             for (String topic : topics) {
-                def hist = service.getWeeklyHistogram(topic)
-                def graph = new Graph(hist)
+                final Histogram<String, Integer> hist = service.getWeeklyHistogram(topic)
+                def graph = new Graph<String, Integer>(hist)
                 def json = mapper.writeValueAsString(graph)
-                graphsJSON.add graph
+                jsons.add json
             }
         } catch (Exception e) {
             logger.error("Exception e=$e")
             model.exception = true
             model.exceptionText = e.toString()
             model.analyzeParameters = params
+            model.keywords = params.topics
             return "analyze"
         }
 
         // if a result is returned
         model.analyzeParameters = new AnalyzeParameters()
-        model.data = graphsJSON
+        model.data = jsons
+        model.keywords = params.topics
 
         return "analyze"
     }
