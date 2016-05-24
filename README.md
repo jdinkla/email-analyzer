@@ -28,7 +28,8 @@ The following frameworks and libraries were used:
 * [Plotly](https://plot.ly/) for drawing the chart
 * [gradle](http://gradle.org/) is used as a make tool
 * [Spock](http://spockframework.org/) is used as the unit testing framework
-
+* [Groovy](http://www.groovy-lang.org/) the Groovy programming language
+* [Docker](https://www.docker.com/) Docker as a container
 
 ### Installation
 
