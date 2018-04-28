@@ -1,0 +1,27 @@
+version: '3'
+services:
+  es-dev:
+    container_name: es-dev
+    image: "elasticsearch:1.7"
+    volumes:
+     - /tmp/es-dev:/usr/share/elasticsearch/data
+    ports:
+     - "9200:9200"
+     - "9300:9300"
+  kibana-dev:
+    container_name: kibana-dev
+    image: kibana:4.1
+    links:
+     - es-dev:elasticsearch
+    ports:
+     - "5601:5601"
+  gradle:
+    container_name: gradle-dev
+    image: "gradle:4.7-jdk8"
+    volumes:
+     - .:/home/gradle/project
+    working_dir: /home/gradle/project
+    ports:
+     - "8080:8080"
+    command: gradle bootRun
+
